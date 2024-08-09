@@ -12,7 +12,7 @@ npm install @headlessui/primitives@latest
 
 ## Documentation
 
-Each component in the package is built based on the [Secondary Entry Point](https://github.com/ng-packagr/ng-packagr/blob/main/docs/secondary-entrypoints.md). To use a specific component use the following import:
+Each component in the package is built based on the [Secondary Entry Point](https://github.com/ng-packagr/ng-packagr/blob/main/docs/secondary-entrypoints.md). To use a specific component, use the following import pattern::
 
 ```typescript
 import { } from '@headlessui/primitives/{COMPONENT_NAME}';
@@ -20,7 +20,7 @@ import { } from '@headlessui/primitives/{COMPONENT_NAME}';
 
 Each component works independently, so you can build your design system gradually. Below you will find links to documentation for each component:
 
-- []()
+- [AutoFocus](https://github.com/headlessng/headlessng/tree/main/packages/@headlessng-primitives/autofocus/README.md)
 
 ## Changelog
 
