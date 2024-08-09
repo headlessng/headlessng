@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@headlessng/primitives": ["packages/@headlessng-primitives/src/index.ts"]
+      "@headlessng/primitives": ["packages/@headlessng-primitives/src/index.ts"],
+      "@headlessng/primitives/autofocus": ["packages/@headlessng-primitives/autofocus/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
