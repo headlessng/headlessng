@@ -1,1 +1,1 @@
-export * from './lib/primitives/primitives.component';
+export default {};
