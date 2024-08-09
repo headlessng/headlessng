@@ -13,8 +13,26 @@
 
 Before using `AutoFocus` you need to import `AutoFocusDirective` in your module or component.
 
+#### Use in the whole module:
+
 ```typescript
 import { AutoFocusDirective } from '@headlessng/primitives/autofocus';
+
+@NgModule({
+    imports: [AutoFocusDirective]
+})
+export class SomeModule {}
+```
+
+#### Use directly in the component:
+
+```typescript
+import { AutoFocusDirective } from '@headlessng/primitives/autofocus';
+
+@Component({
+    imports: [AutoFocusDirective]
+})
+export class SomeComponent {}
 ```
 
 ## Usage
