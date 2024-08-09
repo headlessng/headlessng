@@ -1,0 +1,16 @@
+{
+  "name": "@headlessng/primitives",
+  "version": "0.0.1",
+  "description": "A set of completely unstyled, fully accessible Angular components for building design systems and web applications.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/headlessng/headlessng.git",
+    "directory": "packages/@headlessng-primitives"
+  },
+  "peerDependencies": {
+    "@angular/common": "^18.1.0",
+    "@angular/core": "^18.1.0"
+  },
+  "sideEffects": false
+}
