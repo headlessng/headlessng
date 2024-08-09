@@ -1,0 +1,20 @@
+{
+  "name": "@headlessng/source",
+  "version": "0.0.0",
+  "description": "A set of completely unstyled, fully accessible Angular components for building design systems and web applications.",
+  "repository": "https://github.com/headlessng/headlessng",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@nx/js": "19.5.7",
+    "@nx/workspace": "19.5.7",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "nx": "19.5.7",
+    "prettier": "^2.6.2",
+    "typescript": "~5.5.2"
+  }
+}
