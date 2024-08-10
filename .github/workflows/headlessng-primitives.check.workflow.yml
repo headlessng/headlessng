@@ -18,7 +18,7 @@ permissions:
 
 jobs:
   build:
-    name: '@headlessng/primitives - build'
+    name: build
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -58,7 +58,7 @@ jobs:
       uses: dorny/test-reporter@v1
       if: success() || failure()
       with:
-        name: '@headlessng/primitives - test results'
+        name: 'test results'
         path: reports/packages/@headlessng-primitives/results.xml
         reporter: jest-junit
 
