@@ -1,11 +1,7 @@
 # Changelog
 
-All notable changes to this package will be documented in this file.
+Changelog and version history for the `@headlessng/primitives` library.
 
-## [Unreleased]
+## [0.0.0]
 
-### Added
---
-
-### Fixed
---
+The package has been configured and is ready for development.

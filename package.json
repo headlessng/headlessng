@@ -1,12 +1,13 @@
 {
   "name": "@headlessng/source",
   "version": "0.0.0",
-  "description": "A set of completely unstyled, fully accessible Angular components for building design systems and web applications.",
+  "description": "A workspace containing ready-made libraries for building design systems based on Angular.",
   "repository": "https://github.com/headlessng/headlessng",
   "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
+  "author": {
+    "name": "Adam Wojtaś",
+    "url": "https://www.linkedin.com/in/adam-wojta%C5%9B/"
+  },
   "scripts": {
     "primitives:build": "nx run @headlessng/primitives:build:production",
     "primitives:lint": "nx run @headlessng/primitives:lint --with-deps",
@@ -48,6 +49,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
+    "jest-junit": "^16.0.0",
     "jest-preset-angular": "~14.1.0",
     "jsonc-eslint-parser": "^2.1.0",
     "ng-packagr": "~18.1.0",

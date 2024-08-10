@@ -1,0 +1,63 @@
+name: "@headlessng/primitives - check"
+
+on:
+  pull_request:
+    branches:
+    - main
+    - release/*
+  push:
+    branches:
+    - main
+    - release/*
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run lint '@headlessng/primitives'
+      run: npm run primitives:lint
+
+    - name: Run test '@headlessng/primitives'
+      run: npm run primitives:test:report
+
+    - name: Report test '@headlessng/primitives'
+      uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: '@headlessng/primitives'
+        path: reports/packages/@headlessng-primitives/results.xml
+        reporter: jest-junit
+
+    - name: Report coverage '@headlessng/primitives'
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        badge: true
+        filename: reports/packages/@headlessng-primitives/coverage.xml
+        format: markdown
+        output: both
+
+    - name: Publish coverage to pull request comment
+      uses: marocchino/sticky-pull-request-comment@v2
+      if: github.event_name == 'pull_request'
+      with:
+        recreate: true
+        path: code-coverage-results.md
+
+    - name: Run build '@headlessng/primitives'
+      run: npm run primitives:build

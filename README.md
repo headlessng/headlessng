@@ -1,6 +1,6 @@
 # headlessng
 
-A set of completely unstyled, fully accessible Angular components for building design systems and web applications.
+A workspace containing ready-made libraries for building design systems based on Angular.
 
 ## Documentation
 
@@ -8,13 +8,10 @@ Below you will find a list of available packages and a link to their documentati
 
 | Name | Description | Version |
 |---|---|---|
-| [`@headlessng/primitives`](https://github.com/headlessng/headlessng/tree/main/packages/@headlessng-primitives) | A package containing a set of all primitive and unstyled components. | 0.0.1 |
+| [`@headlessng/primitives`](packages/@headlessng-primitives/README.md) | A set of unstyled and fully accessible components for building design systems based on Angular. | 0.0.0 |
 
-## Changelog
+## Changelogs
 
 Each package contains its own changelog, below you will find links to each of them.
 
-- [@headlessng/primitives](https://github.com/headlessng/headlessng/tree/main/packages/@headlessng-primitives/CHANGELOG.md)
-
-## Contributing
---
+- [@headlessng/primitives](packages/@headlessng-primitives/CHANGELOG.md)

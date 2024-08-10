@@ -3,7 +3,8 @@ export default {
   displayName: '@headlessng/primitives',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/packages/@headlessng-primitives',
+  coverageDirectory: '../../reports/packages/@headlessng-primitives',
+  coverageReporters: [['cobertura', { file: 'coverage.xml' }]],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
@@ -13,6 +14,13 @@ export default {
       },
     ],
   },
+  reporters: [
+    "default",
+    ["jest-junit", {
+      outputDirectory: "reports/packages/@headlessng-primitives",
+      outputName: `results.xml`
+    }]
+  ],
   transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
