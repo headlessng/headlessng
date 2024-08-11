@@ -46,7 +46,7 @@ jobs:
         run: npm run primitives:lint
 
       - name: Test source
-        run: npm run primitives:test
+        run: npm run primitives:test:report
 
       - name: Report test results
         uses: dorny/test-reporter@v1
