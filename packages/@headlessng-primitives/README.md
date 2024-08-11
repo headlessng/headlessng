@@ -7,7 +7,7 @@ A set of unstyled and fully accessible components for building design systems ba
 To install the latest version of package, use the following command:
 
 ```sh
-npm install -s @headlessui/primitives@latest
+npm install -s @headlessng/primitives@latest
 ```
 
 ## Import
@@ -15,7 +15,7 @@ npm install -s @headlessui/primitives@latest
 Each component in the package is built based on the [Secondary Entry Point](https://github.com/ng-packagr/ng-packagr/blob/main/docs/secondary-entrypoints.md). To import a specific component from the library, use the following pattern:
 
 ```typescript
-import { } from '@headlessui/primitives/*';
+import {} from '@headlessng/primitives/*';
 ```
 
 ## Documentation

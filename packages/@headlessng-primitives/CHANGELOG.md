@@ -6,10 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
---
+### Fixed
+
+- fixed installation and import commands in readme.md file
 
 ## [0.0.0] - 2024-08-11
 
 ### Added
 
 - The package has been configured and is ready for development.
+
+[Unreleased]: https://github.com/headlessng/headlessng/compare/@headlessng/primitives@v0.0.0...HEAD
+[0.0.0]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.0.0
