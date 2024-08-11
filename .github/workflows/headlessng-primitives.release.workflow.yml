@@ -1,24 +1,16 @@
-name: '@headlessng/primitives - check'
+name: '@headlessng/primitives - release'
 
 on:
-  pull_request:
-    branches:
-      - main
-      - release/*
-  push:
-    branches:
-      - main
-      - release/*
+  release:
+    types: [published]
 
 permissions:
-  checks: write
   contents: read
   id-token: write
-  pull-requests: write
 
 jobs:
   build:
-    name: build
+    name: release
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -31,6 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Cache dependencies
         id: cache-npm
@@ -52,7 +45,7 @@ jobs:
         run: npm run primitives:lint
 
       - name: Test source
-        run: npm run primitives:test:report
+        run: npm run primitives:test
 
       - name: Report test results
         uses: dorny/test-reporter@v1
@@ -70,12 +63,11 @@ jobs:
           format: markdown
           output: both
 
-      - name: Publish coverage report to the pull request comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          path: code-coverage-results.md
-
       - name: Build source
         run: npm run primitives:build
+
+      - name: Publish package
+        run: npm publish --provenance --access public
+        working-directory: dist/packages/@headlessng-primitives
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -14,7 +14,8 @@
     "primitives:lint:fix": "nx run @headlessng/primitives:lint --fix --with-deps",
     "primitives:test": "nx run @headlessng/primitives:test",
     "primitives:test:report": "nx run @headlessng/primitives:test --coverage",
-    "primitives:test:watch": "nx run @headlessng/primitives:test --watch"
+    "primitives:test:watch": "nx run @headlessng/primitives:test --watch",
+    "changelog:extract": "node ./.github/scripts/extract-changelog.js"
   },
   "private": true,
   "devDependencies": {

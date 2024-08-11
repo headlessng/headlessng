@@ -2,7 +2,10 @@
   "name": "@headlessng/primitives",
   "version": "0.0.0",
   "description": "A set of unstyled and fully accessible components for building design systems based on Angular.",
-  "keywords": ["angular", "headless", "ui", "components"],
+  "keywords": [
+    "angular",
+    "headless"
+  ],
   "author": {
     "name": "Adam Wojtaś",
     "url": "https://www.linkedin.com/in/adam-wojta%C5%9B/"
