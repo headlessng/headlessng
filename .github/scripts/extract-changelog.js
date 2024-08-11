@@ -2,7 +2,7 @@ const { resolve } = require('path');
 const { readFileSync } = require('fs');
 
 // Result example: '@headlessng/primitives-v0.0.0'
-const tag = '@headlessng/primitives-v0.0.0';
+const tag = process.argv[2];
 
 // Result example: '0.0.0'
 const versionFromTag = tag.slice(tag.indexOf('-v') + 2, tag.length);

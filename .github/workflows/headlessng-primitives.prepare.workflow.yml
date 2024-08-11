@@ -29,8 +29,7 @@ jobs:
 
       - name: Prepare release notes
         run: |
-          RELEASE_NOTES=$(npm run changelog:extract ${{ github.ref_name }})
-          echo "RELEASE_NOTES" >> $GITHUB_ENV
+          echo "RELEASE_NOTES=$(npm run changelog:extract ${{ github.ref_name }})" >> $GITHUB_ENV
 
       - name: Create draft release
         uses: softprops/action-gh-release@v1
