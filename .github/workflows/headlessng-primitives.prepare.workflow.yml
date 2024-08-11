@@ -29,7 +29,7 @@ jobs:
 
       - name: Prepare release notes
         run: |
-          RELEASE_NOTES=$(npm run changelog:extract ${{ github.ref_name }})
+          RELEASE_NOTES=$(npm run changelog:extract ${{ github.ref_name }} --silent)
           echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
           echo "$RELEASE_NOTES" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
