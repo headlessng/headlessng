@@ -5,6 +5,7 @@ on:
     types: [published]
 
 permissions:
+  checks: write
   contents: read
   id-token: write
 
