@@ -45,6 +45,12 @@ describe('@headlessng/primitives/focus', () => {
       expect(debug.references['hFocusRef']).toBeInstanceOf(FocusDirective);
     });
 
+    it('should clear the focus monitor subscription on the component destroy', () => {
+      const stopMonitoring = jest.spyOn(directive['_focusMonitor'], 'stopMonitoring');
+      fixture.destroy();
+      expect(stopMonitoring).toHaveBeenCalled();
+    });
+
     it('should have the "focused" signal set to "true" when focus is programmatically set to the host element', () => {
       expect(directive.focused()).toBe(false);
       focusMonitorValue$.next('program');
