@@ -16,6 +16,9 @@
     "url": "git+https://github.com/headlessng/headlessng.git",
     "directory": "packages/@headlessng-primitives"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@angular/cdk": "^18.1.4",
+    "@angular/core": "~18.1.0"
+  },
   "sideEffects": false
 }
