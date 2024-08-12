@@ -22,7 +22,7 @@ import {} from '@headlessng/primitives/*';
 
 Each component in this library is independent and has its own documentation, below you will find links to each of them:
 
-- [focus](focus/README.md)
+- [@headlessng/primitives/focus](focus/README.md)
 
 ## Changelog
 
