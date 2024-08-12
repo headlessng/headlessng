@@ -7,7 +7,7 @@ import { DisabledDirective } from './disabled.directive';
 @Component({
   imports: [DisabledDirective],
   standalone: true,
-  template: `<div hDisabled [disabled]="disabled"></div>`
+  template: `<div hDisabled #hDisabledRef="hDisabledRef" [disabled]="disabled"></div>`
 })
 export class DisabledSpecComponent {
   public disabled = false;
@@ -36,6 +36,10 @@ describe('@headlessng/primitives/disabled', () => {
 
     it('should render the host element correctly', () => {
       expect(host).toBeInstanceOf(HTMLDivElement);
+    });
+
+    it('should forward a reference to the directive instance', () => {
+      expect(debug.references['hDisabledRef']).toBeInstanceOf(DisabledDirective);
     });
 
     it('should have the "aria-disabled", "data-disabled" and "disabled" signal set to "true" when the value passed to input is "true"', async () => {
@@ -92,6 +96,55 @@ describe('@headlessng/primitives/disabled', () => {
       expect(host.getAttribute('aria-disabled')).toBe(null);
       expect(host.getAttribute('data-disabled')).toBe(null);
       expect(directive.disabled()).toBe(false);
+    });
+
+    it('should emit "onEnabled" and should not emit "onDisabled" when the value passed to input is changed to "false"', async () => {
+      component.disabled = true;
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
+      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
+      component.disabled = false;
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(onEnabled).toHaveBeenCalledTimes(1);
+      expect(onDisabled).not.toHaveBeenCalled();
+    });
+
+    it('should emit "onDisabled" and should not emit "onEnabled" when the value passed to input is changed to "true"', async () => {
+      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
+      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
+      component.disabled = true;
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      expect(onEnabled).not.toHaveBeenCalled();
+      expect(onDisabled).toHaveBeenCalledTimes(1);
+    });
+
+    it('should emit "onEnabled" and should not emit "onDisabled" when the "enable" method was called', async () => {
+      component.disabled = true;
+      fixture.detectChanges();
+      await fixture.whenStable();
+
+      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
+      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
+      directive.enable();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(onEnabled).toHaveBeenCalledTimes(1);
+      expect(onDisabled).not.toHaveBeenCalled();
+    });
+
+    it('should emit "onDisabled" and should not emit "onEnabled" event when the "disable" method was called', async () => {
+      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
+      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
+      directive.disable();
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(onEnabled).not.toHaveBeenCalled();
+      expect(onDisabled).toHaveBeenCalledTimes(1);
     });
   });
 });
