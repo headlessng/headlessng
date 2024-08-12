@@ -18,7 +18,8 @@
       "@headlessng/primitives": ["packages/@headlessng-primitives/src/index.ts"],
       "@headlessng/primitives/common": ["packages/@headlessng-primitives/common/src/index.ts"],
       "@headlessng/primitives/disabled": ["packages/@headlessng-primitives/disabled/src/index.ts"],
-      "@headlessng/primitives/focus": ["packages/@headlessng-primitives/focus/src/index.ts"]
+      "@headlessng/primitives/focus": ["packages/@headlessng-primitives/focus/src/index.ts"],
+      "@headlessng/primitives/required": ["packages/@headlessng-primitives/required/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
