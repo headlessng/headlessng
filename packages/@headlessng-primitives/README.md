@@ -24,6 +24,7 @@ Each component in this library is independent and has its own documentation, bel
 
 - [@headlessng/primitives/disabled](disabled/README.md)
 - [@headlessng/primitives/focus](focus/README.md)
+- [@headlessng/primitives/required](required/README.md)
 
 ## Changelog
 
