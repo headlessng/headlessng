@@ -1,4 +1,13 @@
-import { booleanAttribute, Directive, effect, Input, output, signal } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  effect,
+  inject,
+  Injector,
+  input,
+  output,
+  signal
+} from '@angular/core';
 
 @Directive({
   exportAs: 'hDisabledRef',
@@ -10,27 +19,39 @@ import { booleanAttribute, Directive, effect, Input, output, signal } from '@ang
   standalone: true
 })
 export class DisabledDirective {
+  private readonly _injector = inject(Injector);
+
   private readonly _disabled = signal<boolean>(false);
   public readonly disabled = this._disabled.asReadonly();
-
-  public readonly onEnabled = output<void>();
-  public readonly onDisabled = output<void>();
-
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input({ alias: 'disabled', transform: booleanAttribute })
-  private set isDisabled(value: boolean) {
-    this._disabled.set(value);
-  }
-
-  constructor() {
-    effect(() => {
-      if (this._disabled()) {
+  private readonly _disabledEffect = effect(
+    () => {
+      if (this.disabled()) {
         this.onDisabled.emit();
       } else {
         this.onEnabled.emit();
       }
-    });
-  }
+    },
+    {
+      injector: this._injector
+    }
+  );
+
+  public readonly onEnabled = output<void>();
+  public readonly onDisabled = output<void>();
+
+  protected readonly isDisabled = input(this._disabled(), {
+    alias: 'disabled',
+    transform: booleanAttribute
+  });
+  private readonly _isDisabledEffect = effect(
+    () => {
+      this._disabled.set(this.isDisabled());
+    },
+    {
+      allowSignalWrites: true,
+      injector: this._injector
+    }
+  );
 
   public disable(): void {
     this._disabled.set(true);
