@@ -1,4 +1,12 @@
-import { booleanAttribute, Directive, Input, signal } from '@angular/core';
+import {
+  booleanAttribute,
+  Directive,
+  effect,
+  inject,
+  Injector,
+  input,
+  signal
+} from '@angular/core';
 
 @Directive({
   exportAs: 'hRequiredRef',
@@ -10,14 +18,24 @@ import { booleanAttribute, Directive, Input, signal } from '@angular/core';
   standalone: true
 })
 export class RequiredDirective {
+  private readonly _injector = inject(Injector);
+
   private readonly _required = signal<boolean>(false);
   public readonly required = this._required.asReadonly();
 
-  // eslint-disable-next-line @angular-eslint/no-input-rename
-  @Input({ alias: 'required', transform: booleanAttribute })
-  private set isRequired(value: boolean) {
-    this._required.set(value);
-  }
+  protected readonly isRequired = input(this._required(), {
+    alias: 'required',
+    transform: booleanAttribute
+  });
+  private readonly _isRequiredEffect = effect(
+    () => {
+      this._required.set(this.isRequired());
+    },
+    {
+      allowSignalWrites: true,
+      injector: this._injector
+    }
+  );
 
   public markAsOptional(): void {
     this._required.set(false);
