@@ -68,7 +68,7 @@ import { FocusDirective } from '@headlessng/primitives/focus';
 @Component({
   import: [FocusDirective],
   selector: 'app-some',
-  template: `<div tabindex="0" hFocus (onFocusVisible)="handleFocusVisible()"></div>`
+  template: `<div tabindex="0" hFocus></div>`
 })
 export class SomeComponent implements AfterViewInit {
   @ViewChild(FocusDirective) focusRef: FocusDirective;
@@ -114,10 +114,10 @@ import { FocusDirective } from '@headlessng/primitives/focus';
   selector: 'app-some',
   template: `<div hFocus tabindex="0"></div>`
 })
-export class SomeComponent implements OnInit {
+export class SomeComponent implements AfterViewInit {
   @ViewChild(FocusDirective) focusRef: FocusDirective;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     console.log(
       this.focusRef.focusVisible()
         ? 'The element has visible focus.'
