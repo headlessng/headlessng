@@ -17,11 +17,6 @@ import { RequiredDirective } from '@headlessng/primitives/required';
 
 export type CheckboxState = 'checked' | 'indeterminate' | 'unchecked';
 export type CheckboxValue = boolean | 'indeterminate';
-export interface CheckboxChangedEvent {
-  readonly originalEvent: KeyboardEvent | MouseEvent;
-  readonly state: CheckboxState;
-  readonly value: CheckboxValue;
-}
 
 @Directive({
   exportAs: 'hCheckboxRef',
@@ -92,14 +87,14 @@ export class CheckboxDirective implements ControlValueAccessor {
 
   @HostListener('keyup.space')
   @HostListener('click')
-  protected handleChange(): boolean | void {
+  private _handleChange(): boolean | void {
     if (!this.disabledRef.disabled()) {
       this._value.set(!this._value());
     }
   }
 
-  public _onChange: ((value: CheckboxValue) => void) | undefined;
-  public _onTouched: (() => void) | undefined;
+  private _onChange: ((value: CheckboxValue) => void) | undefined;
+  private _onTouched: (() => void) | undefined;
 
   public registerOnChange(fn: (value: CheckboxValue) => void): void {
     this._onChange = fn;
