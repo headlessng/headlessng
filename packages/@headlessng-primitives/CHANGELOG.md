@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- added "description" package for creating custom description component
 - added "label" package for creating custom label component
 - added 'required' package to read and manage required state
 - added 'disabled' package to read and manage disabled state
