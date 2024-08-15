@@ -77,7 +77,7 @@ describe('@headlessng/primitives/checkbox', () => {
         expect(directive.value()).toBe(value);
       };
 
-      await check('indeterminate');
+      await check('mixed');
       await check(true);
       await check(false);
     });
@@ -85,7 +85,7 @@ describe('@headlessng/primitives/checkbox', () => {
     it('should have correct "data-state" attribute and "state" signal depending on value', async () => {
       const values: Record<CheckboxState, CheckboxValue> = {
         unchecked: false,
-        indeterminate: 'indeterminate',
+        mixed: 'mixed',
         checked: true
       };
 
@@ -97,7 +97,7 @@ describe('@headlessng/primitives/checkbox', () => {
         expect(directive.state()).toBe(state);
       };
 
-      await checkDataState('indeterminate');
+      await checkDataState('mixed');
       await checkDataState('checked');
       await checkDataState('unchecked');
     });

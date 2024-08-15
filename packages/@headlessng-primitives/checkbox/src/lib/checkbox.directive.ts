@@ -15,8 +15,8 @@ import { DisabledDirective } from '@headlessng/primitives/disabled';
 import { FocusDirective } from '@headlessng/primitives/focus';
 import { RequiredDirective } from '@headlessng/primitives/required';
 
-export type CheckboxState = 'checked' | 'indeterminate' | 'unchecked';
-export type CheckboxValue = boolean | 'indeterminate';
+export type CheckboxState = 'checked' | 'mixed' | 'unchecked';
+export type CheckboxValue = boolean | 'mixed';
 
 @Directive({
   exportAs: 'hCheckboxRef',
@@ -76,8 +76,8 @@ export class CheckboxDirective implements ControlValueAccessor {
     switch (this._value()) {
       case false:
         return 'unchecked';
-      case 'indeterminate':
-        return 'indeterminate';
+      case 'mixed':
+        return 'mixed';
       case true:
         return 'checked';
     }

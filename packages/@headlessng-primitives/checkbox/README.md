@@ -36,10 +36,10 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 
 #### Types
 
-| Type            | Values                                        |
-| --------------- | --------------------------------------------- |
-| `CheckboxState` | `'unchecked' \| 'indeterminate' \| 'checked'` |
-| `CheckboxValue` | `boolean \| 'indeterminate'`                  |
+| Type            | Values                                |
+| --------------- | ------------------------------------- |
+| `CheckboxState` | `'unchecked' \| 'mixed' \| 'checked'` |
+| `CheckboxValue` | `boolean \| 'mixed'`                  |
 
 #### Inputs
 
