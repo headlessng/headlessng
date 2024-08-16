@@ -30,6 +30,7 @@ Contains all the attributes, properties, methods, and events needed to manage de
 
 #### Properties
 
-| Property | Type             | Description                               |
-| -------- | ---------------- | ----------------------------------------- |
-| `id`     | `Signal<string>` | Stores the "id" of a description element. |
+| Property     | Type                      | Description                               |
+| ------------ | ------------------------- | ----------------------------------------- |
+| `elementRef` | `ElementRef<HTMLElement>` | Stores the host element reference.        |
+| `id`         | `Signal<string>`          | Stores the "id" of a description element. |

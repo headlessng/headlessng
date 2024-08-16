@@ -1,5 +1,5 @@
 import { Directive, effect, ElementRef, inject, Injector, input } from '@angular/core';
-import { FieldDirective } from '@headlessng/primitives/field';
+import { FieldDirective, FieldElementRef } from '@headlessng/primitives/field';
 
 const getId = (() => {
   let id = 0;
@@ -14,7 +14,7 @@ const getId = (() => {
   selector: 'label[hLabel]',
   standalone: true
 })
-export class LabelDirective {
+export class LabelDirective implements FieldElementRef {
   private readonly _injector = inject(Injector);
   private readonly _fieldRef = inject(FieldDirective, { optional: true });
   private readonly _fieldRefEffect = effect(

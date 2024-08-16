@@ -35,6 +35,7 @@ Contains all the attributes, properties, methods, and events needed to manage la
 
 #### Properties
 
-| Property | Type             | Description                       |
-| -------- | ---------------- | --------------------------------- |
-| `id`     | `Signal<string>` | Stores the ID of a label element. |
+| Property     | Type                           | Description                        |
+| ------------ | ------------------------------ | ---------------------------------- |
+| `elementRef` | `ElementRef<HTMLLabelElement>` | Stores the host element reference. |
+| `id`         | `Signal<string>`               | Stores the ID of a label element.  |

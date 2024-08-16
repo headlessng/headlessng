@@ -2,15 +2,20 @@ import {
   computed,
   Directive,
   effect,
+  ElementRef,
   inject,
   Injector,
   runInInjectionContext,
+  Signal,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DescriptionDirective } from '@headlessng/primitives/description';
-import { LabelDirective } from '@headlessng/primitives/label';
 import { fromEvent } from 'rxjs';
+
+export interface FieldElementRef {
+  readonly elementRef: ElementRef<HTMLElement> | undefined;
+  readonly id: Signal<string>;
+}
 
 @Directive({
   selector: '[hField]',
@@ -18,14 +23,14 @@ import { fromEvent } from 'rxjs';
 })
 export class FieldDirective {
   private readonly _injector = inject(Injector);
-  private readonly _descriptionRef = signal<DescriptionDirective | undefined>(undefined);
-  private readonly _labelRef = signal<LabelDirective | undefined>(undefined);
+  private readonly _descriptionRef = signal<FieldElementRef | undefined>(undefined);
+  private readonly _labelRef = signal<FieldElementRef | undefined>(undefined);
   private readonly _labelRefEffect = effect(
     () => {
-      const labelElement = this._labelRef()?.elementRef?.nativeElement;
-      if (labelElement) {
+      const label = this._labelRef()?.elementRef?.nativeElement;
+      if (label) {
         runInInjectionContext(this._injector, () => {
-          fromEvent(labelElement, 'click')
+          fromEvent(label, 'click')
             .pipe(takeUntilDestroyed())
             .subscribe(() => this._onLabelClicked?.());
         });
@@ -47,7 +52,7 @@ export class FieldDirective {
    * For internal use only.
    * @private
    */
-  public registerDescriptionRef(ref: DescriptionDirective): void {
+  public registerDescriptionRef(ref: FieldElementRef): void {
     this._descriptionRef.set(ref);
   }
 
@@ -57,7 +62,7 @@ export class FieldDirective {
    * For internal use only.
    * @private
    */
-  public registerLabelRef(ref: LabelDirective): void {
+  public registerLabelRef(ref: FieldElementRef): void {
     this._labelRef.set(ref);
   }
 

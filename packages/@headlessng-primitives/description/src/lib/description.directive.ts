@@ -1,5 +1,5 @@
-import { Directive, effect, inject, Injector, input } from '@angular/core';
-import { FieldDirective } from '@headlessng/primitives/field';
+import { Directive, effect, ElementRef, inject, Injector, input } from '@angular/core';
+import { FieldDirective, FieldElementRef } from '@headlessng/primitives/field';
 
 const getId = (() => {
   let id = 0;
@@ -14,7 +14,7 @@ const getId = (() => {
   selector: '[hDescription]',
   standalone: true
 })
-export class DescriptionDirective {
+export class DescriptionDirective implements FieldElementRef {
   private readonly _injector = inject(Injector);
   private readonly _fieldRef = inject(FieldDirective, { optional: true });
   private readonly _fieldRefEffect = effect(
@@ -27,5 +27,6 @@ export class DescriptionDirective {
     }
   );
 
+  public readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
   public readonly id = input<string>(getId(), { alias: 'id' });
 }
