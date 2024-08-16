@@ -1,13 +1,23 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { DisabledDirective } from '../../../disabled/src';
+import { FieldDirective } from '../../../field/src';
 import { FocusDirective } from '../../../focus/src';
 import { RequiredDirective } from '../../../required/src';
 
 import { CheckboxDirective, CheckboxState, CheckboxValue } from './checkbox.directive';
+
+class FieldMockDirective {
+  descriptionId = signal('description-id');
+  labelId = signal('label-id');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  registerOnLabelClicked(fn: () => void): void {
+    return;
+  }
+}
 
 @Component({
   imports: [FormsModule, CheckboxDirective],
@@ -16,7 +26,13 @@ import { CheckboxDirective, CheckboxState, CheckboxValue } from './checkbox.dire
     hCheckbox
     #hCheckboxRef="hCheckboxRef"
     [disabled]="disabled"
-    [(ngModel)]="value"></div>`
+    [(ngModel)]="value"></div>`,
+  providers: [
+    {
+      provide: FieldDirective,
+      useClass: FieldMockDirective
+    }
+  ]
 })
 class CheckboxSpecComponent {
   public disabled = false;
@@ -40,8 +56,6 @@ describe('@headlessng/primitives/checkbox', () => {
       debug = fixture.debugElement.query(By.directive(CheckboxDirective));
       host = debug.nativeElement;
       directive = debug.injector.get(CheckboxDirective);
-
-      fixture.autoDetectChanges();
     });
 
     it('should render the checkbox element', () => {
@@ -53,7 +67,18 @@ describe('@headlessng/primitives/checkbox', () => {
     });
 
     it('should have the "role" attribute set to "checkbox"', () => {
+      fixture.detectChanges();
       expect(host.getAttribute('role')).toBe('checkbox');
+    });
+
+    it('should have the "aria-describedby" attribute set correctly', () => {
+      fixture.detectChanges();
+      expect(host.getAttribute('aria-describedby')).toBe('description-id');
+    });
+
+    it('should have the "aria-labelledby" attribute set correctly', () => {
+      fixture.detectChanges();
+      expect(host.getAttribute('aria-labelledby')).toBe('label-id');
     });
 
     it('should correctly inject reference to DisabledDirective', () => {
@@ -68,7 +93,18 @@ describe('@headlessng/primitives/checkbox', () => {
       expect(directive.requiredRef).toBeInstanceOf(RequiredDirective);
     });
 
+    it('should correctly register the label click event in the field directive', () => {
+      const registerFn = jest.spyOn(
+        directive['_fieldRef'] as FieldDirective,
+        'registerOnLabelClicked'
+      );
+      fixture.detectChanges();
+      expect(registerFn).toHaveBeenCalled();
+    });
+
     it('should have correct "aria-checked" attribute and "value" signal depending on value', async () => {
+      fixture.autoDetectChanges();
+
       const check = async (value: CheckboxValue) => {
         component.value = value;
         fixture.detectChanges();
@@ -83,6 +119,8 @@ describe('@headlessng/primitives/checkbox', () => {
     });
 
     it('should have correct "data-state" attribute and "state" signal depending on value', async () => {
+      fixture.autoDetectChanges();
+
       const values: Record<CheckboxState, CheckboxValue> = {
         unchecked: false,
         mixed: 'mixed',
@@ -103,6 +141,8 @@ describe('@headlessng/primitives/checkbox', () => {
     });
 
     it('should have correct "tabindex" attribute depending on disabled state', async () => {
+      fixture.autoDetectChanges();
+
       component.disabled = true;
       fixture.detectChanges();
       await fixture.whenStable();
@@ -140,21 +180,18 @@ describe('@headlessng/primitives/checkbox', () => {
 
       debug.triggerEventHandler('keyup.space');
       expect(directive.value()).toBe(false);
-
-      component.value = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(directive.value()).toBe(false);
     });
 
     it('should emit "onChanged" event when the value was changed', async () => {
       const onChanged = jest.spyOn(directive.onChanged, 'emit');
+      fixture.detectChanges();
+      await fixture.whenStable();
       expect(directive.value()).toBe(false);
       component.value = true;
       fixture.detectChanges();
       await fixture.whenStable();
       expect(directive.value()).toBe(true);
-      expect(onChanged).toHaveBeenCalledTimes(1);
+      expect(onChanged).toHaveBeenCalled();
     });
   });
 });

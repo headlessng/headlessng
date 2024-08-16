@@ -2,7 +2,16 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
+import { FieldDirective } from '../../../field/src';
+
 import { DescriptionDirective } from './description.directive';
+
+class FieldMockDirective {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public registerDescriptionRef(ref: DescriptionDirective): void {
+    return;
+  }
+}
 
 @Component({
   imports: [DescriptionDirective],
@@ -11,7 +20,13 @@ import { DescriptionDirective } from './description.directive';
     <span hDescription #hDescriptionRef="hDescriptionRef"></span>
     <span hDescription #hDescriptionRef="hDescriptionRef"></span>
     <span hDescription #hDescriptionRef="hDescriptionRef" class="custom" id="custom-id"></span>
-  `
+  `,
+  providers: [
+    {
+      provide: FieldDirective,
+      useClass: FieldMockDirective
+    }
+  ]
 })
 class DescriptionSpecComponent {}
 
@@ -26,7 +41,6 @@ describe('@headlessng/primitives/description', () => {
       }).createComponent(DescriptionSpecComponent);
 
       debugs = fixture.debugElement.queryAll(By.directive(DescriptionDirective));
-      fixture.autoDetectChanges();
     });
 
     // This test should be run first due to the generation of unique prefixes that are stored in memory.
@@ -34,7 +48,10 @@ describe('@headlessng/primitives/description', () => {
       debugs
         .map(x => x.nativeElement as HTMLSpanElement)
         .filter(x => !x.classList.contains('custom'))
-        .forEach((x, i) => expect(x.getAttribute('id')).toBe(`h-description-${i}`));
+        .forEach((x, i) => {
+          fixture.detectChanges();
+          expect(x.getAttribute('id')).toBe(`h-description-${i}`);
+        });
     });
 
     it('should set correct "id" attribute when they are passed to inputs', () => {
@@ -52,6 +69,16 @@ describe('@headlessng/primitives/description', () => {
       debugs.forEach(x =>
         expect(x.references['hDescriptionRef']).toBeInstanceOf(DescriptionDirective)
       );
+    });
+
+    it('should correctly register own reference in the field directive', () => {
+      debugs
+        .map(x => x.references['hDescriptionRef'] as DescriptionDirective)
+        .forEach(x => {
+          const registerFn = jest.spyOn(x['_fieldRef'] as FieldDirective, 'registerDescriptionRef');
+          fixture.detectChanges();
+          expect(registerFn).toHaveBeenCalledWith(x);
+        });
     });
   });
 });

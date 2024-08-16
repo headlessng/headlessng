@@ -39,7 +39,7 @@ export class DisabledDirective {
   public readonly onEnabled = output<void>();
   public readonly onDisabled = output<void>();
 
-  protected readonly isDisabled = input(this._disabled(), {
+  public readonly isDisabled = input(this._disabled(), {
     alias: 'disabled',
     transform: booleanAttribute
   });
