@@ -4,18 +4,56 @@ An unstyled, fully functional and accessible checkbox component from which you c
 
 ## Usage
 
-`CheckboxDirective` is a standalone directive, so you can import it directly in a standalone component or an entire module.
-
 ```typescript
-import { CheckboxDirective } from '@headlessng/primitives/checkbox';
+import {
+  CheckboxDirective,
+  CheckboxIndicatorDirective,
+  CheckboxValue
+} from '@headlessng/primitives/checkbox';
 
 @Component({
-  import: [CheckboxDirective],
-  selector: 'app-some',
-  template: `<div hCheckbox></div>`,
+  import: [CheckboxDirective, CheckboxIndicatorDirective],
+  selector: 'app-checkbox',
+  template: `
+    <div
+      hCheckbox
+      class="checkbox"
+      [(ngModel)]="model"
+      [disabled]="disabled()"
+      [required]="required()">
+      <ng-container *hCheckboxIndicator="'checked'">
+        <!-- icon for "checked" state -->
+      </ng-container>
+      <ng-container *hCheckboxIndicator="'mixed'">
+        <!-- icon for "mixed" state -->
+      </ng-container>
+    </div>
+  `,
+  styles: `
+    .checkbox {
+      /* default styles */
+    }
+
+    .checkbox[data-state='checked'],
+    .checkbox[data-state='mixed'] {
+      /* checked or mixed state */
+    }
+
+    .checkbox[data-disabled] {
+      /* disabled state */
+    }
+
+    .checkbox[data-focus-visible] {
+      /* focus visible state */
+    }
+  `,
   standalone: true
 })
-export class CheckboxComponent {}
+export class CheckboxComponent {
+  public readonly disabled = input<boolean>(false);
+  public readonly model = model.required<CheckboxValue>();
+  public readonly required = input<boolean>(false);
+}
 ```
 
 ## API reference
@@ -34,19 +72,12 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 | `[data-state]`         | `CheckboxState` | Informs about the current checkbox status. |
 | `[data-required]`      | `true`          | Present when checkbox is required.         |
 
-#### Types
-
-| Type            | Values                                |
-| --------------- | ------------------------------------- |
-| `CheckboxState` | `'unchecked' \| 'mixed' \| 'checked'` |
-| `CheckboxValue` | `boolean \| 'mixed'`                  |
-
 #### Inputs
 
-| Input      | Type    | Required | Default value | Description                                          |
-| ---------- | ------- | -------- | ------------- | ---------------------------------------------------- |
-| `disabled` | boolean | no       | `false`       | When the 'true' is passed, the checkbox is disabled. |
-| `required` | boolean | no       | `false`       | When the 'true' is passed, the checkbox is required. |
+| Input      | Type      | Required | Default value | Description                                          |
+| ---------- | --------- | -------- | ------------- | ---------------------------------------------------- |
+| `disabled` | `boolean` | no       | `false`       | When the 'true' is passed, the checkbox is disabled. |
+| `required` | `boolean` | no       | `false`       | When the 'true' is passed, the checkbox is required. |
 
 #### Outputs
 
@@ -61,25 +92,44 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 
 #### Properties
 
-| Property      | Type                                         | Default       | Description                                              |
-| ------------- | -------------------------------------------- | ------------- | -------------------------------------------------------- |
-| `disabledRef` | [`DisabledDirective`](../disabled/README.md) | -             | A instance of [DisabledDirective](../disabled/README.md) |
-| `focusRef`    | [`FocusDirective`](../focus/README.md)       | -             | A instance of [FocusDirective](../focus/README.md)       |
-| `requiredRef` | [`RequiredDirective`](../required/README.md) | -             | A instance to [RequiredDirective](../disabled/README.md) |
-| `state`       | `Signal<CheckboxState>`                      | `'unchecked'` | Stores the current state of the checkbox.                |
-| `value`       | `Signal<CheckboxValue>`                      | `false`       | Stores the current value of the checkbox.                |
+| Property      | Type                                         | Description                                              |
+| ------------- | -------------------------------------------- | -------------------------------------------------------- |
+| `disabledRef` | [`DisabledDirective`](../disabled/README.md) | A instance of [DisabledDirective](../disabled/README.md) |
+| `focusRef`    | [`FocusDirective`](../focus/README.md)       | A instance of [FocusDirective](../focus/README.md)       |
+| `requiredRef` | [`RequiredDirective`](../required/README.md) | A instance to [RequiredDirective](../disabled/README.md) |
+| `state`       | `Signal<CheckboxState>`                      | Stores the current state of the checkbox.                |
+| `value`       | `Signal<CheckboxValue>`                      | Stores the current value of the checkbox.                |
+
+#### Types
+
+| Type            | Values                                |
+| --------------- | ------------------------------------- |
+| `CheckboxState` | `'unchecked' \| 'mixed' \| 'checked'` |
+| `CheckboxValue` | `boolean \| 'mixed'`                  |
+
+### CheckboxIndicator
+
+Structural directive to display icons depending on the state of a checkbox.
+
+#### Inputs
+
+| Input                 | Type            | Required | Default value | Description                                                           |
+| --------------------- | --------------- | -------- | ------------- | --------------------------------------------------------------------- |
+| `*hCheckboxIndicator` | `CheckboxState` | yes      | -             | Pass the state of the checkbox for which you want to display an icon. |
 
 ## Accessibility
 
 ### ARIA attributes
 
-| ARIA attribute  | Type            | Description                                                             |
-| --------------- | --------------- | ----------------------------------------------------------------------- |
-| `aria-checked`  | `CheckboxValue` | Present always with the current checkbox value.                         |
-| `aria-disabled` | `true`          | Present when checkbox is disabled.                                      |
-| `aria-required` | `true`          | Present when checkbox is required.                                      |
-| `role`          | `checkbox`      | Present always.                                                         |
-| `tabindex`      | `0 \| -1`       | If the checkbox is enabled it sets the value to "0", otherwise to "-1". |
+| ARIA attribute     | Type            | Description                                                                                                                                      |
+| ------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `aria-checked`     | `CheckboxValue` | Present always with the current checkbox value.                                                                                                  |
+| `aria-describedby` | `string`        | Presented when the checkbox is used together with [`FieldDirective`](../field/README.md) and [`DescriptionDirective`](../description/README.md). |
+| `aria-disabled`    | `true`          | Present when checkbox is disabled.                                                                                                               |
+| `aria-labelledby`  | `string`        | Presented when the checkbox is used together with [`FieldDirective`](../field/README.md) and [`LabelDirective`](../label/README.md).             |
+| `aria-required`    | `true`          | Present when checkbox is required.                                                                                                               |
+| `role`             | `checkbox`      | Present always.                                                                                                                                  |
+| `tabindex`         | `0 \| -1`       | If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                          |
 
 ### Keyboard interactions
 

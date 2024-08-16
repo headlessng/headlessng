@@ -4,8 +4,6 @@ An unstyled, fully functional and accessible description component from which yo
 
 ## Usage
 
-`DescriptionDirective` is a standalone directive, so you can import it directly in a standalone component or an entire module.
-
 ```typescript
 import { DescriptionDirective } from '@headlessng/primitives/description';
 
@@ -26,12 +24,12 @@ Contains all the attributes, properties, methods, and events needed to manage de
 
 #### Inputs
 
-| Input | Type   | Required | Default value             | Description                                        |
-| ----- | ------ | -------- | ------------------------- | -------------------------------------------------- |
-| `id`  | string | no       | `'h-description-{index}'` | If passed, it will be used for the "id" attribute. |
+| Input | Type   | Required | Default value             | Description                                                                                      |
+| ----- | ------ | -------- | ------------------------- | ------------------------------------------------------------------------------------------------ |
+| `id`  | string | no       | `'h-description-{index}'` | Automatically generated identifier for the description element - is used for the "id" attribute. |
 
 #### Properties
 
-| Property | Type             | Default value                   | Description                                 |
-| -------- | ---------------- | ------------------------------- | ------------------------------------------- |
-| `id`     | `Signal<string>` | `'h-description-{uniqueIndex}'` | Stores the "id" attribute of a description. |
+| Property | Type             | Description                               |
+| -------- | ---------------- | ----------------------------------------- |
+| `id`     | `Signal<string>` | Stores the "id" of a description element. |
