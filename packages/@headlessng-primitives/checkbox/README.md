@@ -107,7 +107,7 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 | `CheckboxState` | `'unchecked' \| 'mixed' \| 'checked'` |
 | `CheckboxValue` | `boolean \| 'mixed'`                  |
 
-### CheckboxIndicator
+### CheckboxIndicatorDirective
 
 Structural directive to display icons depending on the state of a checkbox.
 

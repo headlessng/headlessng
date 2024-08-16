@@ -4,30 +4,21 @@ Manages all related attributes and events for fields in forms, such as binding a
 
 ## Usage
 
-- Source
+```html
+<!-- source -->
+<div hField>
+  <div hCheckbox></div>
+  <label hLabel>Push notifications</label>
+  <span hDescription>Receive app notifications directly to your smartphone.</span>
+</div>
 
-  ```html
-  <div hField>
-    <div hCheckbox></div>
-    <label hLabel>Push notifications</label>
-    <span hDescription>Receive app notifications directly to your smartphone.</span>
-  </div>
-  ```
-
-- Rendered
-  ```html
-  <div>
-    <div
-      aria-checked="false"
-      data-state="unchecked"
-      role="checkbox"
-      tabindex="0"
-      aria-describedby="h-description-0"
-      aria-labelledby="h-label-0"></div>
-    <label id="h-label-0">Push notifications</label>
-    <span id="h-description-0">Receive app notifications directly to your smartphone.</span>
-  </div>
-  ```
+<!-- rendered -->
+<div>
+  <div role="checkbox" [...] aria-describedby="h-description-0" aria-labelledby="h-label-0"></div>
+  <label id="h-label-0">Push notifications</label>
+  <span id="h-description-0">Receive app notifications directly to your smartphone.</span>
+</div>
+```
 
 ## API
 
