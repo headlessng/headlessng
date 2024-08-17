@@ -16,8 +16,14 @@
     "baseUrl": ".",
     "paths": {
       "@headlessng/primitives": ["packages/@headlessng-primitives/src/index.ts"],
+      "@headlessng/primitives/checkbox": ["packages/@headlessng-primitives/checkbox/src/index.ts"],
+      "@headlessng/primitives/description": [
+        "packages/@headlessng-primitives/description/src/index.ts"
+      ],
       "@headlessng/primitives/disabled": ["packages/@headlessng-primitives/disabled/src/index.ts"],
+      "@headlessng/primitives/field": ["packages/@headlessng-primitives/field/src/index.ts"],
       "@headlessng/primitives/focus": ["packages/@headlessng-primitives/focus/src/index.ts"],
+      "@headlessng/primitives/label": ["packages/@headlessng-primitives/label/src/index.ts"],
       "@headlessng/primitives/required": ["packages/@headlessng-primitives/required/src/index.ts"]
     }
   },
