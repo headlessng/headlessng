@@ -29,9 +29,9 @@ Contains all the attributes, properties, methods, and events needed to read and 
 
 #### Inputs
 
-| Input      | Type    | Default value | Description                                         |
-| ---------- | ------- | ------------- | --------------------------------------------------- |
-| `disabled` | boolean | false         | When the 'true' is passed, the element is disabled. |
+| Input      | Type      | Default value | Description                                         |
+| ---------- | --------- | ------------- | --------------------------------------------------- |
+| `disabled` | `boolean` | `false`       | When the 'true' is passed, the element is disabled. |
 
 #### Methods
 

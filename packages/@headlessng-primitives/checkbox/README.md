@@ -130,6 +130,7 @@ Structural directive to display icons depending on the state of a checkbox.
 | `aria-disabled`    | `true`          | Presented when checkbox is disabled.                                                                                                                                       |
 | `aria-labelledby`  | `string`        | A reference identifier to the [`LabelDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).       |
 | `aria-required`    | `true`          | Presented when checkbox is required.                                                                                                                                       |
+| `id`               | `string`        | Always presented. Automatically generated checkbox element identifier.                                                                                                     |
 | `role`             | `checkbox`      | Presented always.                                                                                                                                                          |
 | `tabindex`         | `0 \| -1`       | Presented always. If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                                  |
 

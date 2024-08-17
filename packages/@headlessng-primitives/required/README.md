@@ -29,9 +29,9 @@ Contains all the attributes, properties, methods, and events needed to read and 
 
 #### Inputs
 
-| Input      | Type    | Default value | Description                                         |
-| ---------- | ------- | ------------- | --------------------------------------------------- |
-| `required` | boolean | false         | When the 'true' is passed, the element is required. |
+| Input      | Type      | Default value | Description                                         |
+| ---------- | --------- | ------------- | --------------------------------------------------- |
+| `required` | `boolean` | `false`       | When the 'true' is passed, the element is required. |
 
 #### Methods
 
@@ -42,14 +42,14 @@ Contains all the attributes, properties, methods, and events needed to read and 
 
 #### Properties
 
-| Property   | Type              | Default value | Description                                                |
-| ---------- | ----------------- | ------------- | ---------------------------------------------------------- |
-| `required` | `Signal<boolean>` | `false`       | Stores information about the required state of an element. |
+| Property   | Type              | Description                                                |
+| ---------- | ----------------- | ---------------------------------------------------------- |
+| `required` | `Signal<boolean>` | Stores information about the required state of an element. |
 
 ## Accessibility
 
-### ARIA attributes
+### Attributes
 
-| ARIA attribute  | Values | Description                     |
+| Attribute       | Type   | Description                     |
 | --------------- | ------ | ------------------------------- |
 | `aria-required` | `true` | Added when element is required. |

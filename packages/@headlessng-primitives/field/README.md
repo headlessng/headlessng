@@ -26,7 +26,8 @@ Manages all related attributes and events for fields in forms, such as binding a
 
 #### Properties
 
-| Property        | Type             | Description                                            |
-| --------------- | ---------------- | ------------------------------------------------------ |
-| `descriptionId` | `Signal<string>` | Stores information about the description element's id. |
-| `labelId`       | `Signal<string>` | Stores information about the label element's id.       |
+| Property        | Type             | Description                                                              |
+| --------------- | ---------------- | ------------------------------------------------------------------------ |
+| `controlId`     | `Signal<string>` | Stores information about the control element's id, e.g. input, checkbox. |
+| `descriptionId` | `Signal<string>` | Stores information about the description element's id.                   |
+| `labelId`       | `Signal<string>` | Stores information about the label element's id.                         |

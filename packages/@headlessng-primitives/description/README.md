@@ -35,4 +35,4 @@ Contains all the attributes, properties, methods, and events needed to manage de
 
 | Attribute | Type     | Description                                                               |
 | --------- | -------- | ------------------------------------------------------------------------- |
-| `id`      | 'string' | Always presented. Automatically generated description element identifier. |
+| `id`      | `string` | Always presented. Automatically generated description element identifier. |
