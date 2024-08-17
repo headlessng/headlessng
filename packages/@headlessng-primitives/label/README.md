@@ -27,15 +27,17 @@ export class LabelComponent {}
 
 Contains all the attributes, properties, methods, and events needed to manage label component.
 
-#### Inputs
-
-| Input | Type   | Required | Default value       | Description                                                                                  |
-| ----- | ------ | -------- | ------------------- | -------------------------------------------------------------------------------------------- |
-| `id`  | string | no       | `'h-label-{index}'` | Automatically generated identifier for the "label" element - is used for the "id" attribute. |
-
 #### Properties
 
 | Property     | Type                           | Description                        |
 | ------------ | ------------------------------ | ---------------------------------- |
 | `elementRef` | `ElementRef<HTMLLabelElement>` | Stores the host element reference. |
-| `id`         | `Signal<string>`               | Stores the ID of a label element.  |
+| `id`         | `Signal<string>`               | Stores the id of a label element.  |
+
+## Accessibility
+
+### Attributes
+
+| Attribute | Type     | Description                                                         |
+| --------- | -------- | ------------------------------------------------------------------- |
+| `id`      | 'string' | Always presented. Automatically generated label element identifier. |

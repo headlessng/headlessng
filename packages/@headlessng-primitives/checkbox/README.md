@@ -95,7 +95,9 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 | Property      | Type                                         | Description                                              |
 | ------------- | -------------------------------------------- | -------------------------------------------------------- |
 | `disabledRef` | [`DisabledDirective`](../disabled/README.md) | A instance of [DisabledDirective](../disabled/README.md) |
+| `elementRef`  | `ElementRef<HTMLElement>`                    | Stores the host element reference.                       |
 | `focusRef`    | [`FocusDirective`](../focus/README.md)       | A instance of [FocusDirective](../focus/README.md)       |
+| `id`          | `Signal<string>`                             | Stores the id of a checkbox element.                     |
 | `requiredRef` | [`RequiredDirective`](../required/README.md) | A instance to [RequiredDirective](../disabled/README.md) |
 | `state`       | `Signal<CheckboxState>`                      | Stores the current state of the checkbox.                |
 | `value`       | `Signal<CheckboxValue>`                      | Stores the current value of the checkbox.                |
@@ -119,17 +121,17 @@ Structural directive to display icons depending on the state of a checkbox.
 
 ## Accessibility
 
-### ARIA attributes
+### Attributes
 
-| ARIA attribute     | Type            | Description                                                                                                                                      |
-| ------------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `aria-checked`     | `CheckboxValue` | Present always with the current checkbox value.                                                                                                  |
-| `aria-describedby` | `string`        | Presented when the checkbox is used together with [`FieldDirective`](../field/README.md) and [`DescriptionDirective`](../description/README.md). |
-| `aria-disabled`    | `true`          | Present when checkbox is disabled.                                                                                                               |
-| `aria-labelledby`  | `string`        | Presented when the checkbox is used together with [`FieldDirective`](../field/README.md) and [`LabelDirective`](../label/README.md).             |
-| `aria-required`    | `true`          | Present when checkbox is required.                                                                                                               |
-| `role`             | `checkbox`      | Present always.                                                                                                                                  |
-| `tabindex`         | `0 \| -1`       | If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                          |
+| Attribute          | Type            | Description                                                                                                                                                                |
+| ------------------ | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aria-checked`     | `CheckboxValue` | Presented always with the current checkbox value.                                                                                                                          |
+| `aria-describedby` | `string`        | A reference identifier to the [`DescriptionDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md). |
+| `aria-disabled`    | `true`          | Presented when checkbox is disabled.                                                                                                                                       |
+| `aria-labelledby`  | `string`        | A reference identifier to the [`LabelDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).       |
+| `aria-required`    | `true`          | Presented when checkbox is required.                                                                                                                                       |
+| `role`             | `checkbox`      | Presented always.                                                                                                                                                          |
+| `tabindex`         | `0 \| -1`       | Presented always. If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                                  |
 
 ### Keyboard interactions
 

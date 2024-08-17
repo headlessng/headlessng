@@ -2,20 +2,24 @@ import {
   computed,
   Directive,
   effect,
-  ElementRef,
   inject,
   Injector,
   runInInjectionContext,
-  Signal,
   signal
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
-export interface FieldElementRef {
-  readonly elementRef: ElementRef<HTMLElement> | undefined;
-  readonly id: Signal<string>;
-}
+import {
+  ControlFieldRef,
+  DescriptionFieldRef,
+  FieldRef,
+  inControlType,
+  inDescriptionType,
+  inLabelType,
+  inType,
+  LabelFieldRef
+} from './field-ref';
 
 @Directive({
   selector: '[hField]',
@@ -23,56 +27,54 @@ export interface FieldElementRef {
 })
 export class FieldDirective {
   private readonly _injector = inject(Injector);
-  private readonly _descriptionRef = signal<FieldElementRef | undefined>(undefined);
-  private readonly _labelRef = signal<FieldElementRef | undefined>(undefined);
-  private readonly _labelRefEffect = effect(
+  private readonly _refs = signal<FieldRef[]>([]);
+
+  private readonly _controlRef = computed<ControlFieldRef | undefined>(
+    () => this._refs().find(inControlType) as ControlFieldRef
+  );
+
+  private readonly _descriptionRef = computed<DescriptionFieldRef | undefined>(
+    () => this._refs().find(inDescriptionType) as DescriptionFieldRef
+  );
+
+  private readonly _labelRef = computed<LabelFieldRef | undefined>(
+    () => this._refs().find(inLabelType) as LabelFieldRef
+  );
+
+  public readonly descriptionId = computed(() => this._descriptionRef()?.id());
+  public readonly controlId = computed(() => this._controlRef()?.id());
+  public readonly labelId = computed(() => this._labelRef()?.id());
+
+  private readonly _connectControlWithLabelEffect = effect(
     () => {
-      const label = this._labelRef()?.elementRef?.nativeElement;
-      if (label) {
-        runInInjectionContext(this._injector, () => {
-          fromEvent(label, 'click')
-            .pipe(takeUntilDestroyed())
-            .subscribe(() => this._onLabelClicked?.());
-        });
+      const controlRef = this._controlRef();
+      const labelRef = this._labelRef();
+      if (!controlRef || !labelRef) {
+        return;
       }
+
+      runInInjectionContext(this._injector, () => {
+        fromEvent(labelRef.elementRef.nativeElement, 'click')
+          .pipe(takeUntilDestroyed())
+          .subscribe(() => controlRef.handleLabelClick());
+      });
     },
     {
       injector: this._injector
     }
   );
 
-  public readonly descriptionId = computed(() => this._descriptionRef()?.id());
-  public readonly labelId = computed(() => this._labelRef()?.id());
-
-  private _onLabelClicked: (() => void) | undefined;
-
   /**
-   * Registers references to the `DescriptionDirective`.
+   * Registers a reference to a child element of a field.
    *
    * For internal use only.
    * @private
    */
-  public registerDescriptionRef(ref: FieldElementRef): void {
-    this._descriptionRef.set(ref);
-  }
-
-  /**
-   * Registers references to the `LabelDirective`.
-   *
-   * For internal use only.
-   * @private
-   */
-  public registerLabelRef(ref: FieldElementRef): void {
-    this._labelRef.set(ref);
-  }
-
-  /**
-   * Registers a callback function for the click event on a field label.
-   *
-   * For internal use only.
-   * @private
-   */
-  public registerOnLabelClicked(fn: () => void): void {
-    this._onLabelClicked = fn;
+  public register(ref: FieldRef): void {
+    const refs = this._refs();
+    const existsWithType = refs.some(inType(ref.refType));
+    if (!existsWithType) {
+      this._refs.set([...refs, ref]);
+    }
   }
 }

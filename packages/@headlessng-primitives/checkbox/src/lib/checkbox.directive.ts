@@ -6,13 +6,12 @@ import {
   forwardRef,
   HostListener,
   inject,
-  Injector,
   output,
   signal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DisabledDirective } from '@headlessng/primitives/disabled';
-import { FieldDirective } from '@headlessng/primitives/field';
+import { ControlFieldRef } from '@headlessng/primitives/field';
 import { FocusDirective } from '@headlessng/primitives/focus';
 import { RequiredDirective } from '@headlessng/primitives/required';
 
@@ -26,6 +25,7 @@ export type CheckboxValue = boolean | 'mixed';
     '[attr.aria-describedby]': '_fieldRef?.descriptionId()',
     '[attr.aria-labelledby]': '_fieldRef?.labelId()',
     '[attr.data-state]': 'state()',
+    '[attr.id]': 'id()',
     '[attr.role]': '"checkbox"',
     '[attr.tabindex]': 'disabledRef.disabled() ? "-1" : "0"'
   },
@@ -54,18 +54,7 @@ export type CheckboxValue = boolean | 'mixed';
   selector: '[hCheckbox]',
   standalone: true
 })
-export class CheckboxDirective implements ControlValueAccessor {
-  private readonly _injector = inject(Injector);
-  private readonly _fieldRef = inject(FieldDirective, { optional: true });
-  private readonly _fieldRefEffect = effect(
-    () => {
-      this._fieldRef?.registerOnLabelClicked(() => this._handleChange());
-    },
-    {
-      injector: this._injector
-    }
-  );
-
+export class CheckboxDirective extends ControlFieldRef implements ControlValueAccessor {
   public readonly disabledRef = inject(DisabledDirective);
   public readonly focusRef = inject(FocusDirective);
   public readonly requiredRef = inject(RequiredDirective);
@@ -97,7 +86,11 @@ export class CheckboxDirective implements ControlValueAccessor {
 
   public readonly onChanged = output<CheckboxValue>();
 
-  @HostListener('keyup.space')
+  public handleLabelClick(): void {
+    this._handleChange();
+  }
+
+  @HostListener('keydown.space')
   @HostListener('click')
   private _handleChange(): void {
     if (!this.disabledRef.disabled()) {

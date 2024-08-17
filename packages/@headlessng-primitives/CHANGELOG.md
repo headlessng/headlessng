@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- added "checkbox" package for creating custom checkbox component
 - added "field" package for managing all related attributes and events for fields in forms
 - added "description" package for creating custom description component
 - added "label" package for creating custom label component

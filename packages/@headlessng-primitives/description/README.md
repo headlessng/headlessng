@@ -22,15 +22,17 @@ export class DescriptionComponent {}
 
 Contains all the attributes, properties, methods, and events needed to manage description component.
 
-#### Inputs
-
-| Input | Type   | Required | Default value             | Description                                                                                      |
-| ----- | ------ | -------- | ------------------------- | ------------------------------------------------------------------------------------------------ |
-| `id`  | string | no       | `'h-description-{index}'` | Automatically generated identifier for the description element - is used for the "id" attribute. |
-
 #### Properties
 
-| Property     | Type                      | Description                               |
-| ------------ | ------------------------- | ----------------------------------------- |
-| `elementRef` | `ElementRef<HTMLElement>` | Stores the host element reference.        |
-| `id`         | `Signal<string>`          | Stores the "id" of a description element. |
+| Property     | Type                      | Description                             |
+| ------------ | ------------------------- | --------------------------------------- |
+| `elementRef` | `ElementRef<HTMLElement>` | Stores the host element reference.      |
+| `id`         | `Signal<string>`          | Stores the id of a description element. |
+
+## Accessibility
+
+### Attributes
+
+| Attribute | Type     | Description                                                               |
+| --------- | -------- | ------------------------------------------------------------------------- |
+| `id`      | 'string' | Always presented. Automatically generated description element identifier. |

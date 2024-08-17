@@ -11,10 +11,10 @@ import { RequiredDirective } from '../../../required/src';
 import { CheckboxDirective, CheckboxState, CheckboxValue } from './checkbox.directive';
 
 class FieldMockDirective {
-  descriptionId = signal('description-id');
-  labelId = signal('label-id');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  registerOnLabelClicked(fn: () => void): void {
+  public readonly descriptionId = signal('description-id');
+  public readonly labelId = signal('label-id');
+
+  public register(): void {
     return;
   }
 }
@@ -71,6 +71,11 @@ describe('@headlessng/primitives/checkbox', () => {
       expect(host.getAttribute('role')).toBe('checkbox');
     });
 
+    it('should have the "id" attribute set correctly', () => {
+      fixture.detectChanges();
+      expect(host.getAttribute('id')?.startsWith('h-control-')).toBe(true);
+    });
+
     it('should have the "aria-describedby" attribute set correctly', () => {
       fixture.detectChanges();
       expect(host.getAttribute('aria-describedby')).toBe('description-id');
@@ -91,15 +96,6 @@ describe('@headlessng/primitives/checkbox', () => {
 
     it('should correctly inject reference to RequiredDirective', () => {
       expect(directive.requiredRef).toBeInstanceOf(RequiredDirective);
-    });
-
-    it('should correctly register the label click event in the field directive', () => {
-      const registerFn = jest.spyOn(
-        directive['_fieldRef'] as FieldDirective,
-        'registerOnLabelClicked'
-      );
-      fixture.detectChanges();
-      expect(registerFn).toHaveBeenCalled();
     });
 
     it('should have correct "aria-checked" attribute and "value" signal depending on value', async () => {
@@ -157,10 +153,10 @@ describe('@headlessng/primitives/checkbox', () => {
     it('should change the value correctly when pressing the "Space" key', async () => {
       expect(directive.value()).toBe(false);
 
-      debug.triggerEventHandler('keyup.space');
+      debug.triggerEventHandler('keydown.space');
       expect(directive.value()).toBe(true);
 
-      debug.triggerEventHandler('keyup.space');
+      debug.triggerEventHandler('keydown.space');
       expect(directive.value()).toBe(false);
     });
 
