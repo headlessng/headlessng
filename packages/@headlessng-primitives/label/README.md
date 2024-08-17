@@ -27,6 +27,16 @@ export class LabelComponent {}
 
 Contains all the attributes, properties, methods, and events needed to manage label component.
 
+#### Export
+
+The directive is exported to a template variable called `hLabelRef`, which stores its instance. Below is an example of using export.
+
+```html
+<label hLabel #ref="hLabelRef"></label>
+
+Label ID: {{ ref.id() }}
+```
+
 #### Properties
 
 | Property     | Type                           | Description                        |

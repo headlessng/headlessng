@@ -24,6 +24,16 @@ Manages all related attributes and events for fields in forms, such as binding a
 
 ### FieldDirective
 
+#### Export
+
+The directive is exported to a template variable called `hFieldRef`, which stores its instance. Below is an example of using export.
+
+```html
+<div hField #ref="hFieldRef"></div>
+
+Label ID: {{ ref.labelId() }}
+```
+
 #### Properties
 
 | Property        | Type             | Description                                                              |

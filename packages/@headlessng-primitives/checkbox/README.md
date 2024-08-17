@@ -72,6 +72,16 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 | `[data-state]`         | `CheckboxState` | Informs about the current checkbox status. |
 | `[data-required]`      | `true`          | Present when checkbox is required.         |
 
+#### Export
+
+The directive is exported to a template variable called `hCheckboxRef`, which stores its instance. Below is an example of using export.
+
+```html
+<div hCheckbox #ref="hCheckboxRef"></div>
+
+Checkbox state: {{ ref.state() }}
+```
+
 #### Inputs
 
 | Input      | Type      | Required | Default value | Description                                          |

@@ -28,6 +28,16 @@ Contains all the attributes, properties, methods, and events needed to read and 
 | `data-focused`       | `true` | Added when focus is set on a host element.            |
 | `data-focus-visible` | `true` | Added when focus should be visible on a host element. |
 
+#### Export
+
+The directive is exported to a template variable called `hFocusRef`, which stores its instance. Below is an example of using export.
+
+```html
+<div tabindex="0" hFocus #ref="hFocusRef"></div>
+
+<button (click)="ref.focus()">Focus</button>
+```
+
 #### Inputs
 
 | Input | Type | Default value | Description |

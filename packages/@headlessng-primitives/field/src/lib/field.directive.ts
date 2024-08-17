@@ -22,6 +22,7 @@ import {
 } from './field-ref';
 
 @Directive({
+  exportAs: 'hFieldRef',
   selector: '[hField]',
   standalone: true
 })
