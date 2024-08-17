@@ -5,6 +5,7 @@ import {
   inject,
   Injector,
   input,
+  output,
   signal
 } from '@angular/core';
 
@@ -12,7 +13,8 @@ import {
   exportAs: 'hRequiredRef',
   host: {
     '[attr.aria-required]': 'required() || undefined',
-    '[attr.data-required]': 'required() || undefined'
+    '[attr.data-required]': 'required() || undefined',
+    '[attr.required]': 'required() || undefined'
   },
   selector: '[hRequired]',
   standalone: true
@@ -21,15 +23,22 @@ export class RequiredDirective {
   private readonly _injector = inject(Injector);
 
   private readonly _required = signal<boolean>(false);
-  public readonly required = this._required.asReadonly();
+  private readonly _requiredEffect = effect(
+    () => {
+      this.requiredChange.emit(this._required());
+    },
+    {
+      injector: this._injector
+    }
+  );
 
-  protected readonly isRequired = input(this._required(), {
+  protected readonly _requiredInput = input(this._required(), {
     alias: 'required',
     transform: booleanAttribute
   });
-  private readonly _isRequiredEffect = effect(
+  private readonly _requiredInputEffect = effect(
     () => {
-      this._required.set(this.isRequired());
+      this._required.set(this._requiredInput());
     },
     {
       allowSignalWrites: true,
@@ -37,11 +46,10 @@ export class RequiredDirective {
     }
   );
 
-  public markAsOptional(): void {
-    this._required.set(false);
-  }
+  public readonly required = this._required.asReadonly();
+  public readonly requiredChange = output<boolean>();
 
-  public markAsRequired(): void {
-    this._required.set(true);
+  public setRequired(required: boolean): void {
+    this._required.set(required);
   }
 }

@@ -10,7 +10,8 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-import { CheckboxDirective, CheckboxState } from './checkbox.directive';
+import { CheckboxDirective } from './checkbox.directive';
+import { CheckboxState } from './checkbox.interface';
 
 @Directive({
   selector: '[hCheckboxIndicator]',

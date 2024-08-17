@@ -48,6 +48,6 @@ Label ID: {{ ref.id() }}
 
 ### Attributes
 
-| Attribute | Type     | Description                                                         |
-| --------- | -------- | ------------------------------------------------------------------- |
-| `id`      | 'string' | Always presented. Automatically generated label element identifier. |
+| Attribute | Type     | Description     |
+| --------- | -------- | --------------- |
+| `id`      | 'string' | Present always. |

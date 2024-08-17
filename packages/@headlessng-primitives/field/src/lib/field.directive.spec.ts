@@ -6,9 +6,7 @@ import { ControlFieldRef, DescriptionFieldRef, LabelFieldRef } from './field-ref
 import { FieldDirective } from './field.directive';
 
 class ControlMock extends ControlFieldRef {
-  public handleLabelClick(): void {
-    return;
-  }
+  public readonly handleLabelClick = () => undefined;
 }
 
 class DescriptionMock extends DescriptionFieldRef {}

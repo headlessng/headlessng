@@ -35,6 +35,8 @@ describe('@headlessng/primitives/focus', () => {
       jest
         .spyOn(directive['_focusMonitor'], 'monitor')
         .mockImplementation(() => focusMonitorValue$);
+
+      fixture.autoDetectChanges();
     });
 
     it('should render the host element correctly', () => {
@@ -45,278 +47,112 @@ describe('@headlessng/primitives/focus', () => {
       expect(debug.references['hFocusRef']).toBeInstanceOf(FocusDirective);
     });
 
-    it('should clear the focus monitor subscription on the component destroy', () => {
+    it('should clear the focus monitor after it has been destroyed', () => {
       const stopMonitoring = jest.spyOn(directive['_focusMonitor'], 'stopMonitoring');
       fixture.destroy();
       expect(stopMonitoring).toHaveBeenCalled();
     });
 
-    it('should have the "focused" signal set to "true" when focus is programmatically set to the host element', () => {
-      expect(directive.focused()).toBe(false);
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(directive.focused()).toBe(true);
-    });
-
-    it('should have the "focused" signal set to "true" when focus is set via keyboard to the host element', () => {
-      expect(directive.focused()).toBe(false);
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(directive.focused()).toBe(true);
-    });
-
-    it('should have the "focused" signal set to "true" when focus is set via touch to the host element', () => {
-      expect(directive.focused()).toBe(false);
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(directive.focused()).toBe(true);
-    });
-
-    it('should have the "focused" signal set to "true" when focus is set via mouse to the host element', () => {
-      expect(directive.focused()).toBe(false);
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(directive.focused()).toBe(true);
-    });
-
-    it('should have the "focused" signal set to "false" when focus is removed from host element', async () => {
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(directive.focused()).toBe(true);
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(directive.focused()).toBe(false);
-    });
-
-    it('should have the "focusVisible" signal set to "true" when focus is programmatically set to the host element', () => {
-      expect(directive.focusVisible()).toBe(false);
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(directive.focusVisible()).toBe(true);
-    });
-
-    it('should have the "focusVisible" signal set to "true" when focus is set via keyboard to the host element', () => {
-      expect(directive.focusVisible()).toBe(false);
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(directive.focusVisible()).toBe(true);
-    });
-
-    it('should have the "focusVisible" signal set to "false" when focus is set via touch to the host element', () => {
-      expect(directive.focusVisible()).toBe(false);
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(directive.focusVisible()).toBe(false);
-    });
-
-    it('should have the "focusVisible" signal set to "false" when focus is set via mouse to the host element', () => {
-      expect(directive.focusVisible()).toBe(false);
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(directive.focusVisible()).toBe(false);
-    });
-
-    it('should have the "focusVisible" signal set to "false" when focus is removed from host element', async () => {
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(directive.focusVisible()).toBe(true);
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(directive.focusVisible()).toBe(false);
-    });
-
-    it('should have the "data-focused" attribute set to "true" when focus is programmatically set to the host element', () => {
-      expect(host.getAttribute('data-focused')).toBe(null);
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focused')).toBe('true');
-    });
-
-    it('should have the "data-focused" attribute set to "true" when focus is set via keyboard to the host element', () => {
-      expect(host.getAttribute('data-focused')).toBe(null);
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focused')).toBe('true');
-    });
-
-    it('should have the "data-focused" attribute set to "true" when focus is set via touch to the host element', () => {
-      expect(host.getAttribute('data-focused')).toBe(null);
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focused')).toBe('true');
-    });
-
-    it('should have the "data-focused" attribute set to "true" when focus is set via mouse to the host element', () => {
-      expect(host.getAttribute('data-focused')).toBe(null);
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focused')).toBe('true');
-    });
-
-    it('should not have the "data-focused" attribute when focus is removed from host element', async () => {
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focused')).toBe('true');
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focused')).toBe(null);
-    });
-
-    it('should have the "data-focus-visible" attribute set to "true" when focus is programmatically set to the host element', () => {
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focus-visible')).toBe('true');
-    });
-
-    it('should have the "data-focus-visible" attribute set to "true" when focus is set via keyboard to the host element', () => {
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focus-visible')).toBe('true');
-    });
-
-    it('should not have the "data-focus-visible" attribute when focus is set via touch to the host element', () => {
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-    });
-
-    it('should not have the "data-focus-visible" attribute when focus is set via mouse to the host element', () => {
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-    });
-
-    it('should not have the "data-focus-visible" attribute when focus is removed from host element', async () => {
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focus-visible')).toBe('true');
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(host.getAttribute('data-focus-visible')).toBe(null);
-    });
-
-    it('should emit "onFocused" event when focus is programmatically set to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocused, 'emit');
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should emit "onFocused" event when focus is set via keyboard to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocused, 'emit');
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should emit "onFocused" event when focus is set via touch to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocused, 'emit');
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should emit "onFocused" event when focus is set via mouse to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocused, 'emit');
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should not emit "onFocus" event when focus is removed from host element', () => {
-      const emitter = jest.spyOn(directive.onFocused, 'emit');
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should emit "onFocusVisible" event when focus is programmatically set to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocusVisible, 'emit');
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should emit "onFocusVisible" event when focus is set via keyboard to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocusVisible, 'emit');
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should not emit "onFocusVisible" event when focus is set via touch to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocusVisible, 'emit');
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should not emit "onFocusVisible" event when focus is set via mouse to the host element', () => {
-      const emitter = jest.spyOn(directive.onFocusVisible, 'emit');
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should not emit "onFocusVisible" event when focus is removed from host element', () => {
-      const emitter = jest.spyOn(directive.onFocusVisible, 'emit');
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should not emit "onBlurred" event when focus is programmatically set to the host element', () => {
-      const emitter = jest.spyOn(directive.onBlurred, 'emit');
-      focusMonitorValue$.next('program');
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should not emit "onBlurred" event when focus is set via keyboard to the host element', () => {
-      const emitter = jest.spyOn(directive.onBlurred, 'emit');
-      focusMonitorValue$.next('keyboard');
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should not emit "onBlurred" event when focus is set via touch to the host element', () => {
-      const emitter = jest.spyOn(directive.onBlurred, 'emit');
-      focusMonitorValue$.next('touch');
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should not emit "onBlurred" event when focus is set via mouse to the host element', () => {
-      const emitter = jest.spyOn(directive.onBlurred, 'emit');
-      focusMonitorValue$.next('mouse');
-      fixture.detectChanges();
-      expect(emitter).not.toHaveBeenCalled();
-    });
-
-    it('should emit "onBlurred" event when focus is removed from host element', () => {
-      const emitter = jest.spyOn(directive.onBlurred, 'emit');
-      focusMonitorValue$.next(null);
-      fixture.detectChanges();
-      expect(emitter).toHaveBeenCalledTimes(1);
-    });
-
-    it('should set focus to the host element when the "focus" method is called', () => {
+    it('should set focus when the focus method is called', () => {
       const focusVia = jest.spyOn(directive['_focusMonitor'], 'focusVia');
-      const options: FocusOptions = { preventScroll: true };
-      directive.focus(options);
+      directive.focus();
       fixture.detectChanges();
-      expect(focusVia).toHaveBeenCalledWith(directive['_elementRef'], 'program', options);
+      expect(focusVia).toHaveBeenCalledWith(directive['_elementRef'], 'program');
     });
 
-    it('should remove focus from the host element when the "blur" method is called', () => {
+    it('should remove focus when the blur method is called', () => {
       const focusVia = jest.spyOn(directive['_focusMonitor'], 'focusVia');
       directive.blur();
       fixture.detectChanges();
       expect(focusVia).toHaveBeenCalledWith(directive['_elementRef'], null);
+    });
+
+    it('should have the correct state and attributes when focus is set via program', () => {
+      expect(directive.focused()).toBe(false);
+      expect(directive.focusVisible()).toBe(false);
+      expect(host.getAttribute('data-focused')).toBe(null);
+      expect(host.getAttribute('data-focus-visible')).toBe(null);
+      focusMonitorValue$.next('program');
+      fixture.detectChanges();
+      expect(directive.focused()).toBe(true);
+      expect(directive.focusVisible()).toBe(true);
+      expect(host.getAttribute('data-focused')).toBe('true');
+      expect(host.getAttribute('data-focus-visible')).toBe('true');
+    });
+
+    it('should have the correct state and attributes when focus is set via keyboard', () => {
+      expect(directive.focused()).toBe(false);
+      expect(directive.focusVisible()).toBe(false);
+      expect(host.getAttribute('data-focused')).toBe(null);
+      expect(host.getAttribute('data-focus-visible')).toBe(null);
+      focusMonitorValue$.next('keyboard');
+      fixture.detectChanges();
+      expect(directive.focused()).toBe(true);
+      expect(directive.focusVisible()).toBe(true);
+      expect(host.getAttribute('data-focused')).toBe('true');
+      expect(host.getAttribute('data-focus-visible')).toBe('true');
+    });
+
+    it('should have the correct state and attributes when focus is set via mouse', () => {
+      expect(directive.focused()).toBe(false);
+      expect(directive.focusVisible()).toBe(false);
+      expect(host.getAttribute('data-focused')).toBe(null);
+      expect(host.getAttribute('data-focus-visible')).toBe(null);
+      focusMonitorValue$.next('mouse');
+      fixture.detectChanges();
+      expect(directive.focused()).toBe(true);
+      expect(directive.focusVisible()).toBe(false);
+      expect(host.getAttribute('data-focused')).toBe('true');
+      expect(host.getAttribute('data-focus-visible')).toBe(null);
+    });
+
+    it('should have the correct state and attributes when focus is set via touch', () => {
+      expect(directive.focused()).toBe(false);
+      expect(directive.focusVisible()).toBe(false);
+      expect(host.getAttribute('data-focused')).toBe(null);
+      expect(host.getAttribute('data-focus-visible')).toBe(null);
+      focusMonitorValue$.next('touch');
+      fixture.detectChanges();
+      expect(directive.focused()).toBe(true);
+      expect(directive.focusVisible()).toBe(false);
+      expect(host.getAttribute('data-focused')).toBe('true');
+      expect(host.getAttribute('data-focus-visible')).toBe(null);
+    });
+
+    it('should emit correct events when focus is set via program', () => {
+      const focusedChange = jest.spyOn(directive.focusedChange, 'emit');
+      const focusVisibleChange = jest.spyOn(directive.focusVisibleChange, 'emit');
+      focusMonitorValue$.next('program');
+      fixture.detectChanges();
+      expect(focusedChange).toHaveBeenCalled();
+      expect(focusVisibleChange).toHaveBeenCalled();
+    });
+
+    it('should emit correct events when focus is set via keyboard', () => {
+      const focusedChange = jest.spyOn(directive.focusedChange, 'emit');
+      const focusVisibleChange = jest.spyOn(directive.focusVisibleChange, 'emit');
+      focusMonitorValue$.next('keyboard');
+      fixture.detectChanges();
+      expect(focusedChange).toHaveBeenCalled();
+      expect(focusVisibleChange).toHaveBeenCalled();
+    });
+
+    it('should emit correct events when focus is set via mouse', () => {
+      const focusedChange = jest.spyOn(directive.focusedChange, 'emit');
+      const focusVisibleChange = jest.spyOn(directive.focusVisibleChange, 'emit');
+      focusMonitorValue$.next('mouse');
+      fixture.detectChanges();
+      expect(focusedChange).toHaveBeenCalled();
+      expect(focusVisibleChange).not.toHaveBeenCalled();
+    });
+
+    it('should emit correct events when focus is set via touch', () => {
+      const focusedChange = jest.spyOn(directive.focusedChange, 'emit');
+      const focusVisibleChange = jest.spyOn(directive.focusVisibleChange, 'emit');
+      focusMonitorValue$.next('touch');
+      fixture.detectChanges();
+      expect(focusedChange).toHaveBeenCalled();
+      expect(focusVisibleChange).not.toHaveBeenCalled();
     });
   });
 });
