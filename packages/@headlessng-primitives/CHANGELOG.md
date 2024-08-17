@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+--
+
+## [0.1.0] - 2024-08-17
+
 ### Added
 
 - added "checkbox" package for creating custom checkbox component
@@ -27,5 +31,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - The package has been configured and is ready for development.
 
-[Unreleased]: https://github.com/headlessng/headlessng/compare/@headlessng/primitives-v0.0.0...HEAD
+[Unreleased]: https://github.com/headlessng/headlessng/compare/@headlessng/primitives-v0.1.0...HEAD
+[0.1.0]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.1.0
 [0.0.0]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.0.0
