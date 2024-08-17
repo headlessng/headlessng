@@ -22,6 +22,16 @@ export class DescriptionComponent {}
 
 Contains all the attributes, properties, methods, and events needed to manage description component.
 
+#### Export
+
+The directive is exported to a template variable called `hDescriptionRef`, which stores its instance. Below is an example of using export.
+
+```html
+<span hDescription #ref="hDescriptionRef"></span>
+
+Description ID: {{ ref.id() }}
+```
+
 #### Properties
 
 | Property     | Type                      | Description                             |

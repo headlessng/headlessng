@@ -27,6 +27,16 @@ Contains all the attributes, properties, methods, and events needed to read and 
 | --------------- | ------ | ------------------------------- |
 | `data-disabled` | `true` | Added when element is disabled. |
 
+#### Export
+
+The directive is exported to a template variable called `hDisabledRef`, which stores its instance. Below is an example of using export.
+
+```html
+<input hDisabled #ref="hDisabledRef" />
+
+Disabled state: {{ ref.disabled() }}
+```
+
 #### Inputs
 
 | Input      | Type      | Default value | Description                                         |

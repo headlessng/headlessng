@@ -27,6 +27,16 @@ Contains all the attributes, properties, methods, and events needed to read and 
 | --------------- | ------ | ------------------------------- |
 | `data-required` | `true` | Added when element is required. |
 
+#### Export
+
+The directive is exported to a template variable called `hRequiredRef`, which stores its instance. Below is an example of using export.
+
+```html
+<input hRequired #ref="hRequiredRef" [required]="true" />
+
+Required state: {{ ref.required() }}
+```
+
 #### Inputs
 
 | Input      | Type      | Default value | Description                                         |
