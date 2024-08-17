@@ -43,6 +43,6 @@ Description ID: {{ ref.id() }}
 
 ### Attributes
 
-| Attribute | Type     | Description                                                               |
-| --------- | -------- | ------------------------------------------------------------------------- |
-| `id`      | `string` | Always presented. Automatically generated description element identifier. |
+| Attribute | Type     | Description       |
+| --------- | -------- | ----------------- |
+| `id`      | `string` | Always presented. |

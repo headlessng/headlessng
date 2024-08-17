@@ -23,16 +23,16 @@ Contains all the attributes, properties, methods, and events needed to read and 
 
 #### Data attributes
 
-| Data attribute  | Values | Description                     |
-| --------------- | ------ | ------------------------------- |
-| `data-disabled` | `true` | Added when element is disabled. |
+| Data attribute  | Values | Description                       |
+| --------------- | ------ | --------------------------------- |
+| `data-disabled` | `true` | Present when element is disabled. |
 
 #### Export
 
 The directive is exported to a template variable called `hDisabledRef`, which stores its instance. Below is an example of using export.
 
 ```html
-<input hDisabled #ref="hDisabledRef" />
+<input hDisabled #ref="hDisabledRef" [disabled]="true" />
 
 Disabled state: {{ ref.disabled() }}
 ```
@@ -45,28 +45,27 @@ Disabled state: {{ ref.disabled() }}
 
 #### Methods
 
-| Method            | Description                                         |
-| ----------------- | --------------------------------------------------- |
-| `enable(): void`  | When the method is called, it enables the element.  |
-| `disable(): void` | When the method is called, it disables the element. |
+| Method                                 | Description                 |
+| -------------------------------------- | --------------------------- |
+| `setDisabled(disabled: boolean): void` | Changes the disabled state. |
 
 #### Outputs
 
-| Output       | Type                 | Description                             |
-| ------------ | -------------------- | --------------------------------------- |
-| `onEnabled`  | `EventEmitter<void>` | Emitted when element has been enabled.  |
-| `onDisabled` | `EventEmitter<void>` | Emitted when element has been disabled. |
+| Output           | Type                        | Description                              |
+| ---------------- | --------------------------- | ---------------------------------------- |
+| `disabledChange` | `OutputEmitterRef<boolean>` | Emitted when the disabled state changes. |
 
 #### Properties
 
-| Property   | Type              | Description                                                |
-| ---------- | ----------------- | ---------------------------------------------------------- |
-| `disabled` | `Signal<boolean>` | Stores information about the disabled state of an element. |
+| Property   | Type              | Description                                  |
+| ---------- | ----------------- | -------------------------------------------- |
+| `disabled` | `Signal<boolean>` | Stores information about the disabled state. |
 
 ## Accessibility
 
-### ARIA attributes
+### Attributes
 
-| ARIA attribute  | Values | Description                     |
-| --------------- | ------ | ------------------------------- |
-| `aria-disabled` | `true` | Added when element is disabled. |
+| Attribute       | Values | Description                       |
+| --------------- | ------ | --------------------------------- |
+| `aria-disabled` | `true` | Present when element is disabled. |
+| `disabled`      | `true` | Present when element is disabled. |

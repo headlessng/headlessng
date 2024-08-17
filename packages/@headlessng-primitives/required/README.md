@@ -23,9 +23,9 @@ Contains all the attributes, properties, methods, and events needed to read and 
 
 #### Data attributes
 
-| Data attribute  | Values | Description                     |
-| --------------- | ------ | ------------------------------- |
-| `data-required` | `true` | Added when element is required. |
+| Data attribute  | Values | Description                       |
+| --------------- | ------ | --------------------------------- |
+| `data-required` | `true` | Present when element is required. |
 
 #### Export
 
@@ -45,21 +45,21 @@ Required state: {{ ref.required() }}
 
 #### Methods
 
-| Method                   | Description                                              |
-| ------------------------ | -------------------------------------------------------- |
-| `markAsOptional(): void` | When the method is called, it marks element as optional. |
-| `markAsRequired(): void` | When the method is called, it marks element as required. |
+| Method                                 | Description                 |
+| -------------------------------------- | --------------------------- |
+| `setRequired(required: boolean): void` | Changes the required state. |
 
 #### Properties
 
-| Property   | Type              | Description                                                |
-| ---------- | ----------------- | ---------------------------------------------------------- |
-| `required` | `Signal<boolean>` | Stores information about the required state of an element. |
+| Property   | Type              | Description                                  |
+| ---------- | ----------------- | -------------------------------------------- |
+| `required` | `Signal<boolean>` | Stores information about the required state. |
 
 ## Accessibility
 
 ### Attributes
 
-| Attribute       | Type   | Description                     |
-| --------------- | ------ | ------------------------------- |
-| `aria-required` | `true` | Added when element is required. |
+| Attribute       | Type   | Description                       |
+| --------------- | ------ | --------------------------------- |
+| `aria-required` | `true` | Present when element is required. |
+| `required`      | `true` | Present when element is required. |

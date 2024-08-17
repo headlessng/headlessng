@@ -42,60 +42,46 @@ describe('@headlessng/primitives/required', () => {
       expect(debug.references['hRequiredRef']).toBeInstanceOf(RequiredDirective);
     });
 
-    it('should have the "aria-required", "data-required" and "required" signal set to "true" when the value passed to input is "true"', async () => {
-      expect(host.getAttribute('aria-required')).toBe(null);
-      expect(host.getAttribute('data-required')).toBe(null);
-      expect(directive.required()).toBe(false);
-      component.required = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-required')).toBe('true');
-      expect(host.getAttribute('data-required')).toBe('true');
-      expect(directive.required()).toBe(true);
+    it('should set the correct attributes when the required state changes', () => {
+      const expectValue = (value: 'true' | null) => {
+        expect(host.getAttribute('aria-required')).toBe(value);
+        expect(host.getAttribute('data-required')).toBe(value);
+        expect(host.getAttribute('required')).toBe(value);
+      };
+
+      const changeTo = (required: boolean) => {
+        directive.setRequired(required);
+        fixture.detectChanges();
+      };
+
+      changeTo(true);
+      expectValue('true');
+
+      changeTo(false);
+      expectValue(null);
     });
 
-    it('should have the "aria-required", "data-required" and "required" signal set to "false" when the value passed to input is "false"', async () => {
-      component.required = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-required')).toBe('true');
-      expect(host.getAttribute('data-required')).toBe('true');
-      expect(directive.required()).toBe(true);
+    it('should emit an event when the required state changes', () => {
+      const event = jest.spyOn(directive.requiredChange, 'emit');
+      const checkFor = (value: boolean) => {
+        directive.setRequired(value);
+        fixture.detectChanges();
+        expect(event).toHaveBeenCalledWith(value);
+      };
 
-      component.required = false;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-required')).toBe(null);
-      expect(host.getAttribute('data-required')).toBe(null);
-      expect(directive.required()).toBe(false);
+      checkFor(true);
+      checkFor(false);
     });
 
-    it('should have the "aria-required", "data-required" and "required" signal set to "true" when the "markAsRequired" method was called', async () => {
-      expect(host.getAttribute('aria-required')).toBe(null);
-      expect(host.getAttribute('data-required')).toBe(null);
-      expect(directive.required()).toBe(false);
-      directive.markAsRequired();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-required')).toBe('true');
-      expect(host.getAttribute('data-required')).toBe('true');
-      expect(directive.required()).toBe(true);
-    });
+    it('should update the required state when the input value changes', () => {
+      const checkFor = (required: boolean) => {
+        component.required = required;
+        fixture.detectChanges();
+        expect(directive.required()).toBe(required);
+      };
 
-    it('should have the "aria-required", "data-required" and "required" signal set to "false" when the "markAsOptional" method was called', async () => {
-      component.required = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-required')).toBe('true');
-      expect(host.getAttribute('data-required')).toBe('true');
-      expect(directive.required()).toBe(true);
-
-      directive.markAsOptional();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-required')).toBe(null);
-      expect(host.getAttribute('data-required')).toBe(null);
-      expect(directive.required()).toBe(false);
+      checkFor(true);
+      checkFor(false);
     });
   });
 });

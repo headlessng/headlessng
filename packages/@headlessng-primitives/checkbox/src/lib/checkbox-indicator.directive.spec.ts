@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { CheckboxIndicatorDirective } from './checkbox-indicator.directive';
-import { CheckboxDirective, CheckboxState } from './checkbox.directive';
+import { CheckboxDirective } from './checkbox.directive';
+import { CheckboxState } from './checkbox.interface';
 
 class CheckboxDirectiveMock {
   public readonly state = signal<CheckboxState>('unchecked');

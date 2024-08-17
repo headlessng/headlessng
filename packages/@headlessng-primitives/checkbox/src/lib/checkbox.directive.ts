@@ -15,8 +15,7 @@ import { ControlFieldRef } from '@headlessng/primitives/field';
 import { FocusDirective } from '@headlessng/primitives/focus';
 import { RequiredDirective } from '@headlessng/primitives/required';
 
-export type CheckboxState = 'checked' | 'mixed' | 'unchecked';
-export type CheckboxValue = boolean | 'mixed';
+import { stateFromValue, CheckboxValue } from './checkbox.interface';
 
 @Directive({
   exportAs: 'hCheckboxRef',
@@ -33,15 +32,16 @@ export type CheckboxValue = boolean | 'mixed';
     {
       directive: DisabledDirective,
       inputs: ['disabled'],
-      outputs: ['onEnabled', 'onDisabled']
+      outputs: ['disabledChange']
     },
     {
       directive: FocusDirective,
-      outputs: ['onBlurred', 'onFocused', 'onFocusVisible']
+      outputs: ['focusedChange', 'focusVisibleChange']
     },
     {
       directive: RequiredDirective,
-      inputs: ['required']
+      inputs: ['required'],
+      outputs: ['requiredChange']
     }
   ],
   providers: [
@@ -60,35 +60,23 @@ export class CheckboxDirective extends ControlFieldRef implements ControlValueAc
   public readonly requiredRef = inject(RequiredDirective);
 
   private readonly _value = signal<CheckboxValue>(false);
-  public readonly value = this._value.asReadonly();
   private readonly _valueEffect = effect(
     () => {
       const value = this._value();
       this._onChange?.(value);
       this._onTouched?.();
-      this.onChanged.emit(value);
+      this.valueChange.emit(value);
     },
     {
       injector: this._injector
     }
   );
 
-  public readonly state = computed<CheckboxState>(() => {
-    switch (this._value()) {
-      case false:
-        return 'unchecked';
-      case 'mixed':
-        return 'mixed';
-      case true:
-        return 'checked';
-    }
-  });
+  public readonly state = computed(() => stateFromValue(this._value()));
+  public readonly value = this._value.asReadonly();
+  public readonly valueChange = output<CheckboxValue>();
 
-  public readonly onChanged = output<CheckboxValue>();
-
-  public handleLabelClick(): void {
-    this._handleChange();
-  }
+  public readonly handleLabelClick = () => this._handleChange();
 
   @HostListener('keydown.space')
   @HostListener('click')
@@ -99,18 +87,17 @@ export class CheckboxDirective extends ControlFieldRef implements ControlValueAc
   }
 
   private _onChange: ((value: CheckboxValue) => void) | undefined;
-  private _onTouched: (() => void) | undefined;
-
   public registerOnChange(fn: (value: CheckboxValue) => void): void {
     this._onChange = fn;
   }
 
+  private _onTouched: (() => void) | undefined;
   public registerOnTouched(fn: () => void): void {
     this._onTouched = fn;
   }
 
   public setDisabledState?(disabled: boolean): void {
-    disabled ? this.disabledRef.disable() : this.disabledRef.enable();
+    this.disabledRef.setDisabled(disabled);
   }
 
   public writeValue(value: CheckboxValue): void {

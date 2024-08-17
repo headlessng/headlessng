@@ -23,10 +23,10 @@ Contains all the attributes, properties, methods, and events needed to read and 
 
 #### Data attributes
 
-| Data attribute       | Values | Description                                           |
-| -------------------- | ------ | ----------------------------------------------------- |
-| `data-focused`       | `true` | Added when focus is set on a host element.            |
-| `data-focus-visible` | `true` | Added when focus should be visible on a host element. |
+| Data attribute       | Values | Description                                    |
+| -------------------- | ------ | ---------------------------------------------- |
+| `data-focused`       | `true` | Added when focus is set on a host element.     |
+| `data-focus-visible` | `true` | Added when focus is visible on a host element. |
 
 #### Export
 
@@ -38,12 +38,6 @@ The directive is exported to a template variable called `hFocusRef`, which store
 <button (click)="ref.focus()">Focus</button>
 ```
 
-#### Inputs
-
-| Input | Type | Default value | Description |
-| ----- | ---- | ------------- | ----------- |
-| -     | -    | -             | -           |
-
 #### Methods
 
 | Method          | Description                                     |
@@ -53,15 +47,14 @@ The directive is exported to a template variable called `hFocusRef`, which store
 
 #### Outputs
 
-| Output           | Type                 | Description                                        |
-| ---------------- | -------------------- | -------------------------------------------------- |
-| `onBlurred`      | `EventEmitter<void>` | Emitted when focus is removed from a host element. |
-| `onFocused`      | `EventEmitter<void>` | Emitted when focus is set on a host element.       |
-| `onFocusVisible` | `EventEmitter<void>` | Emitted when focus is visible on a host element.   |
+| Output               | Type                        | Description                                    |
+| -------------------- | --------------------------- | ---------------------------------------------- |
+| `focusedChange`      | `OutputEmitterRef<boolean>` | Emitted after the focus state changes.         |
+| `focusVisibleChange` | `OutputEmitterRef<boolean>` | Emitted after the focus visible state changes. |
 
 #### Properties
 
-| Property       | Type              | Default value | Description                                                          |
-| -------------- | ----------------- | ------------- | -------------------------------------------------------------------- |
-| `focused`      | `Signal<boolean>` | `false`       | Stores information about whether a host element has focus.           |
-| `focusVisible` | `Signal<boolean>` | `false`       | Stores information about whether focus is visible on a host element. |
+| Property       | Type              | Description                                       |
+| -------------- | ----------------- | ------------------------------------------------- |
+| `focused`      | `Signal<boolean>` | Stores information about the focus state.         |
+| `focusVisible` | `Signal<boolean>` | Stores information about the focus visible state. |

@@ -42,109 +42,46 @@ describe('@headlessng/primitives/disabled', () => {
       expect(debug.references['hDisabledRef']).toBeInstanceOf(DisabledDirective);
     });
 
-    it('should have the "aria-disabled", "data-disabled" and "disabled" signal set to "true" when the value passed to input is "true"', async () => {
-      expect(host.getAttribute('aria-disabled')).toBe(null);
-      expect(host.getAttribute('data-disabled')).toBe(null);
-      expect(directive.disabled()).toBe(false);
-      component.disabled = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-disabled')).toBe('true');
-      expect(host.getAttribute('data-disabled')).toBe('true');
-      expect(directive.disabled()).toBe(true);
+    it('should set the correct attributes when the disabled state changes', () => {
+      const expectValue = (value: 'true' | null) => {
+        expect(host.getAttribute('aria-disabled')).toBe(value);
+        expect(host.getAttribute('data-disabled')).toBe(value);
+        expect(host.getAttribute('disabled')).toBe(value);
+      };
+
+      const changeTo = (disabled: boolean) => {
+        directive.setDisabled(disabled);
+        fixture.detectChanges();
+      };
+
+      changeTo(true);
+      expectValue('true');
+
+      changeTo(false);
+      expectValue(null);
     });
 
-    it('should have the "aria-disabled", "data-disabled" and "disabled" signal set to "false" when the value passed to input is "false"', async () => {
-      component.disabled = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-disabled')).toBe('true');
-      expect(host.getAttribute('data-disabled')).toBe('true');
-      expect(directive.disabled()).toBe(true);
+    it('should emit an event when the disabled state changes', () => {
+      const event = jest.spyOn(directive.disabledChange, 'emit');
+      const checkFor = (value: boolean) => {
+        directive.setDisabled(value);
+        fixture.detectChanges();
+        expect(event).toHaveBeenCalledWith(value);
+      };
 
-      component.disabled = false;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-disabled')).toBe(null);
-      expect(host.getAttribute('data-disabled')).toBe(null);
-      expect(directive.disabled()).toBe(false);
+      checkFor(true);
+      checkFor(false);
     });
 
-    it('should have the "aria-disabled", "data-disabled" and "disabled" signal set to "true" when the "disable" method was called', async () => {
-      expect(host.getAttribute('aria-disabled')).toBe(null);
-      expect(host.getAttribute('data-disabled')).toBe(null);
-      expect(directive.disabled()).toBe(false);
-      directive.disable();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-disabled')).toBe('true');
-      expect(host.getAttribute('data-disabled')).toBe('true');
-      expect(directive.disabled()).toBe(true);
-    });
+    it('should update the disabled state when the input value changes', () => {
+      const checkFor = (disabled: boolean) => {
+        component.disabled = disabled;
+        fixture.detectChanges();
+        expect(directive.disabled()).toBe(disabled);
+      };
 
-    it('should have the "aria-disabled", "data-disabled" and "disabled" signal set to "false" when the "enable" method was called', async () => {
-      component.disabled = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-disabled')).toBe('true');
-      expect(host.getAttribute('data-disabled')).toBe('true');
-      expect(directive.disabled()).toBe(true);
-
-      directive.enable();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(host.getAttribute('aria-disabled')).toBe(null);
-      expect(host.getAttribute('data-disabled')).toBe(null);
-      expect(directive.disabled()).toBe(false);
-    });
-
-    it('should emit "onEnabled" and should not emit "onDisabled" when the value passed to input is changed to "false"', async () => {
-      component.disabled = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
-      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
-      component.disabled = false;
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(onEnabled).toHaveBeenCalledTimes(1);
-      expect(onDisabled).not.toHaveBeenCalled();
-    });
-
-    it('should emit "onDisabled" and should not emit "onEnabled" when the value passed to input is changed to "true"', async () => {
-      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
-      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
-      component.disabled = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      expect(onEnabled).not.toHaveBeenCalled();
-      expect(onDisabled).toHaveBeenCalledTimes(1);
-    });
-
-    it('should emit "onEnabled" and should not emit "onDisabled" when the "enable" method was called', async () => {
-      component.disabled = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
-
-      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
-      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
-      directive.enable();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(onEnabled).toHaveBeenCalledTimes(1);
-      expect(onDisabled).not.toHaveBeenCalled();
-    });
-
-    it('should emit "onDisabled" and should not emit "onEnabled" event when the "disable" method was called', async () => {
-      const onEnabled = jest.spyOn(directive.onEnabled, 'emit');
-      const onDisabled = jest.spyOn(directive.onDisabled, 'emit');
-      directive.disable();
-      fixture.detectChanges();
-      await fixture.whenStable();
-      expect(onEnabled).not.toHaveBeenCalled();
-      expect(onDisabled).toHaveBeenCalledTimes(1);
+      checkFor(true);
+      checkFor(false);
     });
   });
 });

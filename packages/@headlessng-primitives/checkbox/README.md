@@ -91,14 +91,13 @@ Checkbox state: {{ ref.state() }}
 
 #### Outputs
 
-| Output           | Type                              | Description                                  |
-| ---------------- | --------------------------------- | -------------------------------------------- |
-| `onBlurred`      | `OutputEmitterRef<void>`          | Emitted when focus is removed from checkbox. |
-| `onChanged`      | `OutputEmitterRef<CheckboxValue>` | Emitted when the checkbox value changes.     |
-| `onEnabled`      | `OutputEmitterRef<void>`          | Emitted when checkbox has been enabled.      |
-| `onFocused`      | `OutputEmitterRef<void>`          | Emitted when focus is set on checkbox.       |
-| `onFocusVisible` | `OutputEmitterRef<void>`          | Emitted when focus is visible on checkbox.   |
-| `onDisabled`     | `OutputEmitterRef<void>`          | Emitted when checkbox has been disabled.     |
+| Output               | Type                              | Description                                        |
+| -------------------- | --------------------------------- | -------------------------------------------------- |
+| `disabledChange`     | `OutputEmitterRef<boolean>`       | Emitted when disabled state has been changed.      |
+| `focusedChange`      | `OutputEmitterRef<boolean>`       | Emitted when focus state has been changed.         |
+| `focusVisibleChange` | `OutputEmitterRef<boolean>`       | Emitted when focus visible state has been changed. |
+| `requiredChange`     | `OutputEmitterRef<boolean>`       | Emitted when required state has been changed.      |
+| `valueChange`        | `OutputEmitterRef<CheckboxValue>` | Emitted when value has been changed.               |
 
 #### Properties
 
@@ -127,7 +126,7 @@ Structural directive to display icons depending on the state of a checkbox.
 
 | Input                 | Type            | Required | Default value | Description                                                           |
 | --------------------- | --------------- | -------- | ------------- | --------------------------------------------------------------------- |
-| `*hCheckboxIndicator` | `CheckboxState` | yes      | -             | Pass the state of the checkbox for which you want to display an icon. |
+| `*hCheckboxIndicator` | `CheckboxState` | yes      | -             | Pass the state of the checkbox for which you want to display content. |
 
 ## Accessibility
 
@@ -140,7 +139,9 @@ Structural directive to display icons depending on the state of a checkbox.
 | `aria-disabled`    | `true`          | Presented when checkbox is disabled.                                                                                                                                       |
 | `aria-labelledby`  | `string`        | A reference identifier to the [`LabelDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).       |
 | `aria-required`    | `true`          | Presented when checkbox is required.                                                                                                                                       |
+| `disabled`         | `true`          | Presented when checkbox is disabled.                                                                                                                                       |
 | `id`               | `string`        | Always presented. Automatically generated checkbox element identifier.                                                                                                     |
+| `required`         | `true`          | Presented when checkbox is required.                                                                                                                                       |
 | `role`             | `checkbox`      | Presented always.                                                                                                                                                          |
 | `tabindex`         | `0 \| -1`       | Presented always. If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                                  |
 

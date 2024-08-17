@@ -8,7 +8,8 @@ import { FieldDirective } from '../../../field/src';
 import { FocusDirective } from '../../../focus/src';
 import { RequiredDirective } from '../../../required/src';
 
-import { CheckboxDirective, CheckboxState, CheckboxValue } from './checkbox.directive';
+import { CheckboxDirective } from './checkbox.directive';
+import { stateFromValue, CheckboxValue } from './checkbox.interface';
 
 class FieldMockDirective {
   public readonly descriptionId = signal('description-id');
@@ -56,6 +57,8 @@ describe('@headlessng/primitives/checkbox', () => {
       debug = fixture.debugElement.query(By.directive(CheckboxDirective));
       host = debug.nativeElement;
       directive = debug.injector.get(CheckboxDirective);
+
+      fixture.autoDetectChanges();
     });
 
     it('should render the checkbox element', () => {
@@ -66,23 +69,19 @@ describe('@headlessng/primitives/checkbox', () => {
       expect(debug.references['hCheckboxRef'] instanceof CheckboxDirective).toBe(true);
     });
 
-    it('should have the "role" attribute set to "checkbox"', () => {
-      fixture.detectChanges();
+    it('should have the correct role attribute set', () => {
       expect(host.getAttribute('role')).toBe('checkbox');
     });
 
-    it('should have the "id" attribute set correctly', () => {
-      fixture.detectChanges();
+    it('should have the correct id attribute set', () => {
       expect(host.getAttribute('id')?.startsWith('h-control-')).toBe(true);
     });
 
-    it('should have the "aria-describedby" attribute set correctly', () => {
-      fixture.detectChanges();
+    it('should have the correct aria-describedby attribute set', () => {
       expect(host.getAttribute('aria-describedby')).toBe('description-id');
     });
 
-    it('should have the "aria-labelledby" attribute set correctly', () => {
-      fixture.detectChanges();
+    it('should have the correct aria-labelledby attribute set', () => {
       expect(host.getAttribute('aria-labelledby')).toBe('label-id');
     });
 
@@ -98,45 +97,14 @@ describe('@headlessng/primitives/checkbox', () => {
       expect(directive.requiredRef).toBeInstanceOf(RequiredDirective);
     });
 
-    it('should have correct "aria-checked" attribute and "value" signal depending on value', async () => {
-      fixture.autoDetectChanges();
-
-      const check = async (value: CheckboxValue) => {
-        component.value = value;
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(host.getAttribute('aria-checked')).toBe(`${value}`);
-        expect(directive.value()).toBe(value);
-      };
-
-      await check('mixed');
-      await check(true);
-      await check(false);
+    it('should handle clicking on the label element correctly', () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const handleChange = jest.spyOn(directive as any, '_handleChange');
+      directive.handleLabelClick();
+      expect(handleChange).toHaveBeenCalled();
     });
 
-    it('should have correct "data-state" attribute and "state" signal depending on value', async () => {
-      fixture.autoDetectChanges();
-
-      const values: Record<CheckboxState, CheckboxValue> = {
-        unchecked: false,
-        mixed: 'mixed',
-        checked: true
-      };
-
-      const checkDataState = async (state: CheckboxState) => {
-        component.value = values[state];
-        fixture.detectChanges();
-        await fixture.whenStable();
-        expect(host.getAttribute('data-state')).toBe(state);
-        expect(directive.state()).toBe(state);
-      };
-
-      await checkDataState('mixed');
-      await checkDataState('checked');
-      await checkDataState('unchecked');
-    });
-
-    it('should have correct "tabindex" attribute depending on disabled state', async () => {
+    it('should have the correct tabindex attribute set depending on the disabled state', async () => {
       fixture.autoDetectChanges();
 
       component.disabled = true;
@@ -150,44 +118,85 @@ describe('@headlessng/primitives/checkbox', () => {
       expect(host.getAttribute('tabindex')).toBe('0');
     });
 
-    it('should change the value correctly when pressing the "Space" key', async () => {
-      expect(directive.value()).toBe(false);
+    it('should have the correct attributes set after changing its value', async () => {
+      const check = async (value: CheckboxValue) => {
+        const state = stateFromValue(value);
+        component.value = value;
+        fixture.detectChanges();
+        await fixture.whenStable();
+        expect(host.getAttribute('aria-checked')).toBe(`${value}`);
+        expect(host.getAttribute('data-state')).toBe(state);
+        expect(directive.value()).toBe(value);
+        expect(directive.state()).toBe(state);
+      };
 
+      await check('mixed');
+      await check(true);
+      await check(false);
+    });
+
+    it('should change value correctly after pressing space when it is enabled', () => {
+      expect(directive.value()).toBe(false);
       debug.triggerEventHandler('keydown.space');
       expect(directive.value()).toBe(true);
-
       debug.triggerEventHandler('keydown.space');
       expect(directive.value()).toBe(false);
     });
 
-    it('should not change value when the host element is disabled', async () => {
-      const disabledRef = directive.disabledRef as DisabledDirective;
-      expect(disabledRef.disabled()).toBe(false);
-
+    it('should not change value after pressing space when it is disabled', async () => {
       component.disabled = true;
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(disabledRef.disabled()).toBe(true);
-
       expect(directive.value()).toBe(false);
-
-      debug.triggerEventHandler('click');
-      expect(directive.value()).toBe(false);
-
-      debug.triggerEventHandler('keyup.space');
+      debug.triggerEventHandler('keydown.space');
       expect(directive.value()).toBe(false);
     });
 
-    it('should emit "onChanged" event when the value was changed', async () => {
-      const onChanged = jest.spyOn(directive.onChanged, 'emit');
+    it('should change value correctly after clicking on the element when it is enabled', () => {
+      expect(directive.value()).toBe(false);
+      debug.triggerEventHandler('click');
+      expect(directive.value()).toBe(true);
+      debug.triggerEventHandler('click');
+      expect(directive.value()).toBe(false);
+    });
+
+    it('should not change value after clicking on the element when it is disabled', async () => {
+      component.disabled = true;
       fixture.detectChanges();
       await fixture.whenStable();
+      expect(directive.value()).toBe(false);
+      debug.triggerEventHandler('click');
+      expect(directive.value()).toBe(false);
+    });
+
+    it('should emit an event after its value changes', async () => {
+      const valueChanged = jest.spyOn(directive.valueChange, 'emit');
       expect(directive.value()).toBe(false);
       component.value = true;
       fixture.detectChanges();
       await fixture.whenStable();
       expect(directive.value()).toBe(true);
-      expect(onChanged).toHaveBeenCalled();
+      expect(valueChanged).toHaveBeenCalled();
+    });
+
+    it('should correctly register and handle the on change event for value accessor', async () => {
+      directive.registerOnChange(() => undefined);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const fn = jest.spyOn(directive as any, '_onChange');
+      component.value = true;
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(fn).toHaveBeenCalledWith(true);
+    });
+
+    it('should correctly register and handle the on touched event for value accessor', async () => {
+      directive.registerOnTouched(() => undefined);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const fn = jest.spyOn(directive as any, '_onTouched');
+      component.value = true;
+      fixture.detectChanges();
+      await fixture.whenStable();
+      expect(fn).toHaveBeenCalled();
     });
   });
 });

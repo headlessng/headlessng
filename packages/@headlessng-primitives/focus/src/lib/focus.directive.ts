@@ -1,9 +1,11 @@
-import { FocusMonitor } from '@angular/cdk/a11y';
+import { FocusMonitor, FocusOrigin } from '@angular/cdk/a11y';
 import {
-  AfterContentInit,
+  AfterViewInit,
   Directive,
+  effect,
   ElementRef,
   inject,
+  Injector,
   OnDestroy,
   output,
   signal
@@ -18,47 +20,64 @@ import {
   selector: '[hFocus]',
   standalone: true
 })
-export class FocusDirective implements AfterContentInit, OnDestroy {
+export class FocusDirective implements AfterViewInit, OnDestroy {
   private readonly _elementRef = inject(ElementRef);
   private readonly _focusMonitor = inject(FocusMonitor);
+  private readonly _injector = inject(Injector);
 
   private readonly _focused = signal<boolean>(false);
-  public readonly focused = this._focused.asReadonly();
+  private readonly _focusedEffect = effect(
+    () => {
+      this.focusedChange.emit(this._focused());
+    },
+    {
+      injector: this._injector
+    }
+  );
+
   private readonly _focusVisible = signal<boolean>(false);
+  private readonly _focusVisibleEffect = effect(
+    () => {
+      this.focusVisibleChange.emit(this._focusVisible());
+    },
+    {
+      injector: this._injector
+    }
+  );
+
+  public readonly focused = this._focused.asReadonly();
+  public readonly focusedChange = output<boolean>();
+
   public readonly focusVisible = this._focusVisible.asReadonly();
+  public readonly focusVisibleChange = output<boolean>();
 
-  public readonly onBlurred = output<void>();
-  public readonly onFocused = output<void>();
-  public readonly onFocusVisible = output<void>();
-
-  public ngAfterContentInit(): void {
-    this._focusMonitor.monitor(this._elementRef).subscribe(focusOrigin => {
-      if (!focusOrigin) {
-        this._focused.set(false);
-        this._focusVisible.set(false);
-        this.onBlurred.emit();
-        return;
-      }
-
-      if (focusOrigin === 'keyboard' || focusOrigin === 'program') {
-        this._focusVisible.set(true);
-        this.onFocusVisible.emit();
-      }
-
-      this._focused.set(true);
-      this.onFocused.emit();
-    });
+  public ngAfterViewInit(): void {
+    this._focusMonitor.monitor(this._elementRef).subscribe(x => this._handleFocusOrigin(x));
   }
 
   public ngOnDestroy(): void {
     this._focusMonitor.stopMonitoring(this._elementRef);
   }
 
-  public focus(options?: FocusOptions): void {
-    this._focusMonitor.focusVia(this._elementRef, 'program', options);
+  public focus(): void {
+    this._focusMonitor.focusVia(this._elementRef, 'program');
   }
 
   public blur(): void {
     this._focusMonitor.focusVia(this._elementRef, null);
+  }
+
+  private _handleFocusOrigin(origin: FocusOrigin): void {
+    if (!origin) {
+      this._focused.set(false);
+      this._focusVisible.set(false);
+      return;
+    }
+
+    if (origin === 'keyboard' || origin === 'program') {
+      this._focusVisible.set(true);
+    }
+
+    this._focused.set(true);
   }
 }

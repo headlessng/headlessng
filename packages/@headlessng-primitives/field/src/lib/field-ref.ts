@@ -15,7 +15,6 @@ const labelRefId = typedRefId('label');
 
 export abstract class FieldRef {
   protected readonly _injector = inject(Injector);
-
   protected readonly _fieldRef = inject(FieldDirective, { optional: true });
   private readonly _fieldRefEffect = effect(
     () => {
@@ -28,7 +27,6 @@ export abstract class FieldRef {
   );
 
   public readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
-
   public abstract readonly id: Signal<string>;
   public abstract readonly refType: FieldRefType;
 }
@@ -38,7 +36,7 @@ export abstract class ControlFieldRef extends FieldRef {
   public readonly id = this._id.asReadonly();
   public readonly refType: FieldRefType = 'control';
 
-  public abstract handleLabelClick(): void;
+  public abstract readonly handleLabelClick: () => void;
 }
 
 export abstract class DescriptionFieldRef extends FieldRef {
