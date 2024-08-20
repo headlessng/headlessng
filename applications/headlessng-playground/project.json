@@ -1,0 +1,85 @@
+{
+  "name": "headlessng-playground",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "applications/headlessng-playground/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/applications/headlessng-playground",
+        "index": "applications/headlessng-playground/src/index.html",
+        "browser": "applications/headlessng-playground/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "applications/headlessng-playground/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "applications/headlessng-playground/public"
+          }
+        ],
+        "styles": ["applications/headlessng-playground/src/styles.css"],
+        "scripts": [],
+        "server": "applications/headlessng-playground/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "applications/headlessng-playground/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "headlessng-playground:build:production"
+        },
+        "development": {
+          "buildTarget": "headlessng-playground:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "headlessng-playground:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "applications/headlessng-playground/jest.config.ts"
+      }
+    }
+  }
+}
