@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
---
+### Fixed
+
+- fixed the lack of export of the interface for checkbox
+- fixed visibility of disabled input in DisabledDirective
+- fixed visibility of required input in RequiredDirective
 
 ## [0.1.0] - 2024-08-17
 
