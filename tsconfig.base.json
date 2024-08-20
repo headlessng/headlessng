@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@headlessng/examples": ["packages/@headlessng-examples/src/index.ts"],
       "@headlessng/primitives": ["packages/@headlessng-primitives/src/index.ts"],
       "@headlessng/primitives/checkbox": ["packages/@headlessng-primitives/checkbox/src/index.ts"],
       "@headlessng/primitives/description": [
