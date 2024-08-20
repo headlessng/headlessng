@@ -32,7 +32,7 @@ export class RequiredDirective {
     }
   );
 
-  protected readonly _requiredInput = input(this._required(), {
+  public readonly _requiredInput = input(this._required(), {
     alias: 'required',
     transform: booleanAttribute
   });
