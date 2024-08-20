@@ -35,7 +35,7 @@ export class DisabledDirective {
   public readonly disabled = this._disabled.asReadonly();
   public readonly disabledChange = output<boolean>();
 
-  protected readonly _disabledInput = input(this._disabled(), {
+  public readonly _disabledInput = input(this._disabled(), {
     alias: 'disabled',
     transform: booleanAttribute
   });
