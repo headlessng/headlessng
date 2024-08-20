@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   height: 100%;
-  background-color: var(--surface-800);
+  background-color: var(--neutral-800);
 }
 
 .scene {
@@ -15,5 +15,5 @@
   margin-inline: auto;
   padding: 32px;
   border-radius: 16px;
-  background-color: var(--surface-50);
+  background-color: var(--neutral-50);
 }

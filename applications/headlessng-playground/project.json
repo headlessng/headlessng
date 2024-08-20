@@ -21,7 +21,7 @@
             "input": "applications/headlessng-playground/public"
           }
         ],
-        "styles": ["applications/headlessng-playground/src/styles.css"],
+        "styles": ["packages/@headlessng-examples/src/styles.css"],
         "scripts": [],
         "server": "applications/headlessng-playground/src/main.server.ts",
         "prerender": true,
