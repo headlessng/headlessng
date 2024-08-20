@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Changed
+
+- changed the name of the "value" property to "checked" for the checkbox
+
 ### Fixed
 
 - fixed the lack of export of the interface for checkbox

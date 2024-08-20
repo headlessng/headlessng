@@ -1,11 +1,11 @@
-import { stateFromValue } from './checkbox.interface';
+import { stateFromChecked } from './checkbox.interface';
 
 describe('@headlessng/primitives/checkbox', () => {
-  describe('stateFromValue', () => {
+  describe('stateFromChecked', () => {
     it('should correctly map the checkbox value to the state', async () => {
-      expect(stateFromValue(true)).toBe('checked');
-      expect(stateFromValue('mixed')).toBe('mixed');
-      expect(stateFromValue(false)).toBe('unchecked');
+      expect(stateFromChecked(true)).toBe('checked');
+      expect(stateFromChecked('mixed')).toBe('mixed');
+      expect(stateFromChecked(false)).toBe('unchecked');
     });
   });
 });

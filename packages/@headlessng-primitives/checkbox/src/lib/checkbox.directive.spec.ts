@@ -9,7 +9,7 @@ import { FocusDirective } from '../../../focus/src';
 import { RequiredDirective } from '../../../required/src';
 
 import { CheckboxDirective } from './checkbox.directive';
-import { stateFromValue, CheckboxValue } from './checkbox.interface';
+import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
 
 class FieldMockDirective {
   public readonly descriptionId = signal('description-id');
@@ -27,7 +27,7 @@ class FieldMockDirective {
     hCheckbox
     #hCheckboxRef="hCheckboxRef"
     [disabled]="disabled"
-    [(ngModel)]="value"></div>`,
+    [(ngModel)]="checked"></div>`,
   providers: [
     {
       provide: FieldDirective,
@@ -37,7 +37,7 @@ class FieldMockDirective {
 })
 class CheckboxSpecComponent {
   public disabled = false;
-  public value: CheckboxValue = false;
+  public checked: CheckboxChecked = false;
 }
 
 describe('@headlessng/primitives/checkbox', () => {
@@ -119,14 +119,14 @@ describe('@headlessng/primitives/checkbox', () => {
     });
 
     it('should have the correct attributes set after changing its value', async () => {
-      const check = async (value: CheckboxValue) => {
-        const state = stateFromValue(value);
-        component.value = value;
+      const check = async (checked: CheckboxChecked) => {
+        const state = stateFromChecked(checked);
+        component.checked = checked;
         fixture.detectChanges();
         await fixture.whenStable();
-        expect(host.getAttribute('aria-checked')).toBe(`${value}`);
+        expect(host.getAttribute('aria-checked')).toBe(`${checked}`);
         expect(host.getAttribute('data-state')).toBe(state);
-        expect(directive.value()).toBe(value);
+        expect(directive.checked()).toBe(checked);
         expect(directive.state()).toBe(state);
       };
 
@@ -135,55 +135,55 @@ describe('@headlessng/primitives/checkbox', () => {
       await check(false);
     });
 
-    it('should change value correctly after pressing space when it is enabled', () => {
-      expect(directive.value()).toBe(false);
+    it('should change checked value correctly after pressing space when it is enabled', () => {
+      expect(directive.checked()).toBe(false);
       debug.triggerEventHandler('keydown.space');
-      expect(directive.value()).toBe(true);
+      expect(directive.checked()).toBe(true);
       debug.triggerEventHandler('keydown.space');
-      expect(directive.value()).toBe(false);
+      expect(directive.checked()).toBe(false);
     });
 
-    it('should not change value after pressing space when it is disabled', async () => {
+    it('should not change checked value after pressing space when it is disabled', async () => {
       component.disabled = true;
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(directive.value()).toBe(false);
+      expect(directive.checked()).toBe(false);
       debug.triggerEventHandler('keydown.space');
-      expect(directive.value()).toBe(false);
+      expect(directive.checked()).toBe(false);
     });
 
-    it('should change value correctly after clicking on the element when it is enabled', () => {
-      expect(directive.value()).toBe(false);
+    it('should change checked value correctly after clicking on the element when it is enabled', () => {
+      expect(directive.checked()).toBe(false);
       debug.triggerEventHandler('click');
-      expect(directive.value()).toBe(true);
+      expect(directive.checked()).toBe(true);
       debug.triggerEventHandler('click');
-      expect(directive.value()).toBe(false);
+      expect(directive.checked()).toBe(false);
     });
 
-    it('should not change value after clicking on the element when it is disabled', async () => {
+    it('should not change checked value after clicking on the element when it is disabled', async () => {
       component.disabled = true;
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(directive.value()).toBe(false);
+      expect(directive.checked()).toBe(false);
       debug.triggerEventHandler('click');
-      expect(directive.value()).toBe(false);
+      expect(directive.checked()).toBe(false);
     });
 
     it('should emit an event after its value changes', async () => {
-      const valueChanged = jest.spyOn(directive.valueChange, 'emit');
-      expect(directive.value()).toBe(false);
-      component.value = true;
+      const checkedChange = jest.spyOn(directive.checkedChange, 'emit');
+      expect(directive.checked()).toBe(false);
+      component.checked = true;
       fixture.detectChanges();
       await fixture.whenStable();
-      expect(directive.value()).toBe(true);
-      expect(valueChanged).toHaveBeenCalled();
+      expect(directive.checked()).toBe(true);
+      expect(checkedChange).toHaveBeenCalled();
     });
 
     it('should correctly register and handle the on change event for value accessor', async () => {
       directive.registerOnChange(() => undefined);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fn = jest.spyOn(directive as any, '_onChange');
-      component.value = true;
+      component.checked = true;
       fixture.detectChanges();
       await fixture.whenStable();
       expect(fn).toHaveBeenCalledWith(true);
@@ -193,7 +193,7 @@ describe('@headlessng/primitives/checkbox', () => {
       directive.registerOnTouched(() => undefined);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fn = jest.spyOn(directive as any, '_onTouched');
-      component.value = true;
+      component.checked = true;
       fixture.detectChanges();
       await fixture.whenStable();
       expect(fn).toHaveBeenCalled();
