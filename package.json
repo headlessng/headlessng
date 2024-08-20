@@ -9,6 +9,14 @@
     "url": "https://www.linkedin.com/in/adam-wojta%C5%9B/"
   },
   "scripts": {
+    "start": "npm run playground:serve",
+    "playground:serve": "nx run headlessng-playground:serve",
+    "playground:build": "nx run headlessng-playground:build:production",
+    "playground:lint": "nx run headlessng-playground:lint --with-deps",
+    "playground:lint:fix": "nx run headlessng-playground:lint --fix --with-deps",
+    "playground:test": "nx run headlessng-playground:test",
+    "playground:test:report": "nx run headlessng-playground:test --coverage",
+    "playground:test:watch": "nx run headlessng-playground:test --watch",
     "primitives:build": "nx run @headlessng/primitives:build:production",
     "primitives:lint": "nx run @headlessng/primitives:lint --with-deps",
     "primitives:lint:fix": "nx run @headlessng/primitives:lint --fix --with-deps",
@@ -38,6 +46,7 @@
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/express": "4.17.14",
     "@types/jest": "^29.4.0",
     "@types/node": "18.16.9",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
@@ -71,7 +80,10 @@
     "@angular/forms": "~18.1.0",
     "@angular/platform-browser": "~18.1.0",
     "@angular/platform-browser-dynamic": "~18.1.0",
+    "@angular/platform-server": "~18.1.0",
     "@angular/router": "~18.1.0",
+    "@angular/ssr": "~18.1.0",
+    "express": "^4.19.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

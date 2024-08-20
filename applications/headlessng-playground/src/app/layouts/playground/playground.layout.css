@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background-color: var(--surface-800);
+}
+
+.scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 512px;
+  min-height: 384px;
+  margin-inline: auto;
+  padding: 32px;
+  border-radius: 16px;
+  background-color: var(--surface-50);
+}
