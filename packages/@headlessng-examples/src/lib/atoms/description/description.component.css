@@ -1,0 +1,6 @@
+.description {
+  font-size: 0.875em;
+  line-height: 1.4;
+  font-weight: var(--font-regular);
+  color: var(--text-muted);
+}

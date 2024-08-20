@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 
 import { PlaygroundLayout } from './layouts';
-import { CheckboxPage } from './pages';
+import { CheckboxPage, DescriptionPage, LabelPage } from './pages';
 
 export const appRoutes: Route[] = [
   {
@@ -16,6 +16,14 @@ export const appRoutes: Route[] = [
       {
         path: 'checkbox',
         component: CheckboxPage
+      },
+      {
+        path: 'description',
+        component: DescriptionPage
+      },
+      {
+        path: 'label',
+        component: LabelPage
       }
     ]
   }
