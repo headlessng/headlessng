@@ -22,7 +22,7 @@ import {
 export class DisabledDirective {
   private readonly _injector = inject(Injector);
 
-  private readonly _disabled = signal<boolean>(false);
+  private readonly _disabled = signal<boolean | undefined>(false);
   private readonly _disabledEffect = effect(
     () => {
       this.disabledChange.emit(this._disabled());
@@ -33,7 +33,7 @@ export class DisabledDirective {
   );
 
   public readonly disabled = this._disabled.asReadonly();
-  public readonly disabledChange = output<boolean>();
+  public readonly disabledChange = output<boolean | undefined>();
 
   public readonly _disabledInput = input(this._disabled(), {
     alias: 'disabled',

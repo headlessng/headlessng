@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- added the ability to pass 'undefined' value to 'disabled' input in DisabledDirective
 - added the ability to pass 'undefined' value to 'required' input in RequiredDirective
 
 ### Changed
