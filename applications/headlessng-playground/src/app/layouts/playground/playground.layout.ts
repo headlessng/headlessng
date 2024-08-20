@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-  standalone: true,
   imports: [RouterModule],
-  selector: 'app-root',
-  templateUrl: './app.component.html'
+  selector: 'app-playground-layout',
+  templateUrl: 'playground.layout.html',
+  standalone: true
 })
-export class AppComponent {}
+export class PlaygroundLayout {}
