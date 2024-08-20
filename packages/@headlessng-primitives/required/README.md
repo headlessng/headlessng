@@ -39,9 +39,9 @@ Required state: {{ ref.required() }}
 
 #### Inputs
 
-| Input      | Type      | Default value | Description                                         |
-| ---------- | --------- | ------------- | --------------------------------------------------- |
-| `required` | `boolean` | `false`       | When the 'true' is passed, the element is required. |
+| Input      | Type                   | Default value | Description                                         |
+| ---------- | ---------------------- | ------------- | --------------------------------------------------- |
+| `required` | `boolean \| undefined` | `undefined`   | When the 'true' is passed, the element is required. |
 
 #### Methods
 
@@ -51,9 +51,9 @@ Required state: {{ ref.required() }}
 
 #### Properties
 
-| Property   | Type              | Description                                  |
-| ---------- | ----------------- | -------------------------------------------- |
-| `required` | `Signal<boolean>` | Stores information about the required state. |
+| Property   | Type                           | Description                                  |
+| ---------- | ------------------------------ | -------------------------------------------- |
+| `required` | `Signal<boolean \| undefined>` | Stores information about the required state. |
 
 ## Accessibility
 
