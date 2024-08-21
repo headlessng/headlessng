@@ -193,9 +193,7 @@ describe('@headlessng/primitives/checkbox', () => {
       directive.registerOnTouched(() => undefined);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const fn = jest.spyOn(directive as any, '_onTouched');
-      component.checked = true;
-      fixture.detectChanges();
-      await fixture.whenStable();
+      debug.triggerEventHandler('click');
       expect(fn).toHaveBeenCalled();
     });
   });

@@ -13,6 +13,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DisabledDirective } from '@headlessng/primitives/disabled';
 import { ControlFieldRef } from '@headlessng/primitives/field';
 import { FocusDirective } from '@headlessng/primitives/focus';
+import { InvalidDirective } from '@headlessng/primitives/invalid';
 import { RequiredDirective } from '@headlessng/primitives/required';
 
 import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
@@ -37,6 +38,10 @@ import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
     {
       directive: FocusDirective,
       outputs: ['focusedChange', 'focusVisibleChange']
+    },
+    {
+      directive: InvalidDirective,
+      outputs: ['invalidChange']
     },
     {
       directive: RequiredDirective,
@@ -64,7 +69,6 @@ export class CheckboxDirective extends ControlFieldRef implements ControlValueAc
     () => {
       const checked = this._checked();
       this._onChange?.(checked);
-      this._onTouched?.();
       this.checkedChange.emit(checked);
     },
     {
@@ -83,6 +87,7 @@ export class CheckboxDirective extends ControlFieldRef implements ControlValueAc
   private _handleChange(): void {
     if (!this.disabledRef.disabled()) {
       this._checked.set(!this._checked());
+      this._onTouched?.();
     }
   }
 
