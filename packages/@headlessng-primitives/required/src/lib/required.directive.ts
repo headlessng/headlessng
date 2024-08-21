@@ -22,7 +22,7 @@ import {
 export class RequiredDirective {
   private readonly _injector = inject(Injector);
 
-  private readonly _required = signal<boolean | undefined>(undefined);
+  private readonly _required = signal<boolean>(false);
   private readonly _requiredEffect = effect(
     () => {
       this.requiredChange.emit(this._required());
@@ -47,7 +47,7 @@ export class RequiredDirective {
   );
 
   public readonly required = this._required.asReadonly();
-  public readonly requiredChange = output<boolean | undefined>();
+  public readonly requiredChange = output<boolean>();
 
   public setRequired(required: boolean): void {
     this._required.set(required);
