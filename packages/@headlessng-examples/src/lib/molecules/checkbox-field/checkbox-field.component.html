@@ -1,0 +1,7 @@
+<h-field class="field">
+  <h-checkbox [control]="control()" />
+  <div class="field__caption">
+    <h-label>{{ label() }}</h-label>
+    <h-description *ngIf="description()">{{ description() }}</h-description>
+  </div>
+</h-field>

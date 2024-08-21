@@ -1,0 +1,10 @@
+.field {
+  display: flex;
+  gap: 8px;
+}
+
+.field__caption {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
