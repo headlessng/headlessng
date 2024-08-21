@@ -39,9 +39,9 @@ Disabled state: {{ ref.disabled() }}
 
 #### Inputs
 
-| Input      | Type                   | Default value | Description                                         |
-| ---------- | ---------------------- | ------------- | --------------------------------------------------- |
-| `disabled` | `boolean \| undefined` | `undefined`   | When the 'true' is passed, the element is disabled. |
+| Input      | Type      | Default value | Description                                         |
+| ---------- | --------- | ------------- | --------------------------------------------------- |
+| `disabled` | `boolean` | `false`       | When the 'true' is passed, the element is disabled. |
 
 #### Methods
 
@@ -51,15 +51,15 @@ Disabled state: {{ ref.disabled() }}
 
 #### Outputs
 
-| Output           | Type                                     | Description                              |
-| ---------------- | ---------------------------------------- | ---------------------------------------- |
-| `disabledChange` | `OutputEmitterRef<boolean \| undefined>` | Emitted when the disabled state changes. |
+| Output           | Type                        | Description                              |
+| ---------------- | --------------------------- | ---------------------------------------- |
+| `disabledChange` | `OutputEmitterRef<boolean>` | Emitted when the disabled state changes. |
 
 #### Properties
 
-| Property   | Type                           | Description                                  |
-| ---------- | ------------------------------ | -------------------------------------------- |
-| `disabled` | `Signal<boolean \| undefined>` | Stores information about the disabled state. |
+| Property   | Type              | Description                                  |
+| ---------- | ----------------- | -------------------------------------------- |
+| `disabled` | `Signal<boolean>` | Stores information about the disabled state. |
 
 ## Accessibility
 
