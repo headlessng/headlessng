@@ -46,6 +46,10 @@ import {
     .checkbox[data-focus-visible] {
       /* focus visible state */
     }
+
+    .checkbox[data-invalid] {
+      /* invalid state */
+    }
   `,
   standalone: true
 })
@@ -69,6 +73,7 @@ Contains all the attributes, properties, methods, and events needed to manage ch
 | `[data-disabled]`      | `true`          | Present when checkbox is disabled.         |
 | `[data-focused]`       | `true`          | Present when focus is set on checkbox.     |
 | `[data-focus-visible]` | `true`          | Present when focus is visible on checkbox. |
+| `[data-invalid]`       | `true`          | Present when checkbox state is invalid.    |
 | `[data-state]`         | `CheckboxState` | Informs about the current checkbox status. |
 | `[data-required]`      | `true`          | Present when checkbox is required.         |
 
@@ -97,6 +102,7 @@ Checkbox state: {{ ref.state() }}
 | `disabledChange`     | `OutputEmitterRef<boolean>`         | Emitted when disabled state has been changed.      |
 | `focusedChange`      | `OutputEmitterRef<boolean>`         | Emitted when focus state has been changed.         |
 | `focusVisibleChange` | `OutputEmitterRef<boolean>`         | Emitted when focus visible state has been changed. |
+| `invalidChange`      | `OutputEmitterRef<boolean>`         | Emitted when validation state has been changed.    |
 | `requiredChange`     | `OutputEmitterRef<boolean>`         | Emitted when required state has been changed.      |
 
 #### Properties
@@ -108,6 +114,7 @@ Checkbox state: {{ ref.state() }}
 | `elementRef`  | `ElementRef<HTMLElement>`                    | Stores the host element reference.                       |
 | `focusRef`    | [`FocusDirective`](../focus/README.md)       | A instance of [FocusDirective](../focus/README.md)       |
 | `id`          | `Signal<string>`                             | Stores the id of a checkbox element.                     |
+| `invalid`     | `Signal<boolean \| null>`                    | Stores the validation state of a checkbox element.       |
 | `requiredRef` | [`RequiredDirective`](../required/README.md) | A instance to [RequiredDirective](../disabled/README.md) |
 | `state`       | `Signal<CheckboxState>`                      | Stores the current state of the checkbox.                |
 
@@ -137,6 +144,7 @@ Structural directive to display icons depending on the state of a checkbox.
 | `aria-checked`     | `CheckboxChecked` | Presented always with the current checkbox checked value.                                                                                                                  |
 | `aria-describedby` | `string`          | A reference identifier to the [`DescriptionDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md). |
 | `aria-disabled`    | `true`            | Presented when checkbox is disabled.                                                                                                                                       |
+| `aria-invalid`     | `true`            | Presented when checkbox state is invalid.                                                                                                                                  |
 | `aria-labelledby`  | `string`          | A reference identifier to the [`LabelDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).       |
 | `aria-required`    | `true`            | Presented when checkbox is required.                                                                                                                                       |
 | `disabled`         | `true`            | Presented when checkbox is disabled.                                                                                                                                       |

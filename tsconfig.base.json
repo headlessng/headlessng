@@ -24,6 +24,7 @@
       "@headlessng/primitives/disabled": ["packages/@headlessng-primitives/disabled/src/index.ts"],
       "@headlessng/primitives/field": ["packages/@headlessng-primitives/field/src/index.ts"],
       "@headlessng/primitives/focus": ["packages/@headlessng-primitives/focus/src/index.ts"],
+      "@headlessng/primitives/invalid": ["packages/@headlessng-primitives/invalid/src/index.ts"],
       "@headlessng/primitives/label": ["packages/@headlessng-primitives/label/src/index.ts"],
       "@headlessng/primitives/required": ["packages/@headlessng-primitives/required/src/index.ts"]
     }
