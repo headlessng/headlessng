@@ -6,12 +6,22 @@ import { CheckboxChecked } from '@headlessng/primitives/checkbox';
 import {
   CheckboxComponent,
   DescriptionComponent,
+  ErrorMessageComponent,
   FieldComponent,
   LabelComponent
 } from '../../atoms';
+import { ValidationMessagePipe } from '../../pipes';
 
 @Component({
-  imports: [CommonModule, CheckboxComponent, DescriptionComponent, FieldComponent, LabelComponent],
+  imports: [
+    CommonModule,
+    CheckboxComponent,
+    DescriptionComponent,
+    ErrorMessageComponent,
+    FieldComponent,
+    LabelComponent,
+    ValidationMessagePipe
+  ],
   selector: 'h-checkbox-field',
   templateUrl: 'checkbox-field.component.html',
   styleUrl: 'checkbox-field.component.css',

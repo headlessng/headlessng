@@ -6,6 +6,7 @@ import {
   forwardRef,
   HostListener,
   inject,
+  OnDestroy,
   output,
   signal
 } from '@angular/core';
@@ -23,6 +24,7 @@ import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
   host: {
     '[attr.aria-checked]': '_checked()',
     '[attr.aria-describedby]': '_fieldRef?.descriptionId()',
+    '[attr.aria-errormessage]': '_fieldRef?.errorMessageIds()',
     '[attr.aria-labelledby]': '_fieldRef?.labelId()',
     '[attr.data-state]': 'state()',
     '[attr.id]': 'id()',
@@ -59,7 +61,7 @@ import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
   selector: '[hCheckbox]',
   standalone: true
 })
-export class CheckboxDirective extends ControlFieldRef implements ControlValueAccessor {
+export class CheckboxDirective extends ControlFieldRef implements ControlValueAccessor, OnDestroy {
   public readonly disabledRef = inject(DisabledDirective);
   public readonly focusRef = inject(FocusDirective);
   public readonly requiredRef = inject(RequiredDirective);
@@ -89,6 +91,10 @@ export class CheckboxDirective extends ControlFieldRef implements ControlValueAc
       this._checked.set(!this._checked());
       this._onTouched?.();
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.destroyRef();
   }
 
   private _onChange: ((value: CheckboxChecked) => void) | undefined;

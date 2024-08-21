@@ -2,7 +2,12 @@ import { Component, DebugElement, ElementRef, runInInjectionContext } from '@ang
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import { ControlFieldRef, DescriptionFieldRef, LabelFieldRef } from './field-ref';
+import {
+  ControlFieldRef,
+  DescriptionFieldRef,
+  ErrorMessageFieldRef,
+  LabelFieldRef
+} from './field-ref';
 import { FieldDirective } from './field.directive';
 
 class ControlMock extends ControlFieldRef {
@@ -10,6 +15,7 @@ class ControlMock extends ControlFieldRef {
 }
 
 class DescriptionMock extends DescriptionFieldRef {}
+class ErrorMessageMock extends ErrorMessageFieldRef {}
 
 class LabelMock extends LabelFieldRef {
   public override elementRef: ElementRef<HTMLElement> = new ElementRef(
@@ -32,6 +38,7 @@ describe('@headlessng/primitives/field', () => {
 
     let controlRef: ControlMock;
     let descriptionRef: DescriptionMock;
+    let errorMessageRef: ErrorMessageMock;
     let labelRef: LabelMock;
 
     beforeEach(() => {
@@ -45,6 +52,7 @@ describe('@headlessng/primitives/field', () => {
       runInInjectionContext(debug.injector, () => {
         controlRef = new ControlMock();
         descriptionRef = new DescriptionMock();
+        errorMessageRef = new ErrorMessageMock();
         labelRef = new LabelMock();
       });
     });
@@ -75,11 +83,27 @@ describe('@headlessng/primitives/field', () => {
       expect(directive.descriptionId()).toBe(descriptionRef.id());
     });
 
+    it('should register the error message reference and set its identifier correctly', () => {
+      expect(directive.errorMessageIds()).toBe(undefined);
+      directive.register(errorMessageRef);
+      fixture.detectChanges();
+      expect(directive.errorMessageIds()).toBe(errorMessageRef.id());
+    });
+
     it('should register the label reference and set its identifier correctly', () => {
       expect(directive.labelId()).toBe(undefined);
       directive.register(labelRef);
       fixture.detectChanges();
       expect(directive.labelId()).toBe(labelRef.id());
+    });
+
+    it('should correctly unregister the reference and remove its identifier', () => {
+      expect(directive.labelId()).toBe(undefined);
+      directive.register(labelRef);
+      fixture.detectChanges();
+      expect(directive.labelId()).toBe(labelRef.id());
+      directive.unregister(labelRef);
+      expect(directive.labelId()).toBe(undefined);
     });
 
     it('should connect control and label correctly and trigger an event when it is clicked', async () => {

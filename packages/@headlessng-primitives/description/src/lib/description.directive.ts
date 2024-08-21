@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, OnDestroy } from '@angular/core';
 import { DescriptionFieldRef } from '@headlessng/primitives/field';
 
 @Directive({
@@ -9,4 +9,8 @@ import { DescriptionFieldRef } from '@headlessng/primitives/field';
   selector: '[hDescription]',
   standalone: true
 })
-export class DescriptionDirective extends DescriptionFieldRef {}
+export class DescriptionDirective extends DescriptionFieldRef implements OnDestroy {
+  public ngOnDestroy(): void {
+    this.destroyRef();
+  }
+}

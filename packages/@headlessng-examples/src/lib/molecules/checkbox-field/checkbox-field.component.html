@@ -3,5 +3,10 @@
   <div class="field__caption">
     <h-label>{{ label() }}</h-label>
     <h-description *ngIf="description()">{{ description() }}</h-description>
+    <ng-container *ngIf="control().errors && control().touched">
+      <h-error-message *ngFor="let error of control().errors | keyvalue">
+        {{ error.key | validationMessage }}
+      </h-error-message>
+    </ng-container>
   </div>
 </h-field>

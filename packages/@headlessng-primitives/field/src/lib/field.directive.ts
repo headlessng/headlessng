@@ -13,9 +13,12 @@ import { fromEvent } from 'rxjs';
 import {
   ControlFieldRef,
   DescriptionFieldRef,
+  ErrorMessageFieldRef,
   FieldRef,
+  FieldRefType,
   inControlType,
   inDescriptionType,
+  inErrorMessageType,
   inLabelType,
   inType,
   LabelFieldRef
@@ -38,12 +41,20 @@ export class FieldDirective {
     () => this._refs().find(inDescriptionType) as DescriptionFieldRef
   );
 
+  private readonly _errorMessageRefs = computed<ErrorMessageFieldRef[]>(
+    () => this._refs().filter(inErrorMessageType) as ErrorMessageFieldRef[]
+  );
+
   private readonly _labelRef = computed<LabelFieldRef | undefined>(
     () => this._refs().find(inLabelType) as LabelFieldRef
   );
 
-  public readonly descriptionId = computed(() => this._descriptionRef()?.id());
   public readonly controlId = computed(() => this._controlRef()?.id());
+  public readonly descriptionId = computed(() => this._descriptionRef()?.id());
+  public readonly errorMessageIds = computed(() => {
+    const refs = this._errorMessageRefs();
+    return refs.length ? refs.map(x => x.id()).join(' ') : undefined;
+  });
   public readonly labelId = computed(() => this._labelRef()?.id());
 
   private readonly _connectControlWithLabelEffect = effect(
@@ -65,17 +76,23 @@ export class FieldDirective {
     }
   );
 
-  /**
-   * Registers a reference to a child element of a field.
-   *
-   * For internal use only.
-   * @private
-   */
   public register(ref: FieldRef): void {
     const refs = this._refs();
+    const existsWithId = refs.some(x => x.id() === ref.id());
+    if (existsWithId) {
+      return;
+    }
+
+    const manyAllowedInTypes: FieldRefType[] = ['error-message'];
+    const manyAllowed = manyAllowedInTypes.includes(ref.refType);
     const existsWithType = refs.some(inType(ref.refType));
-    if (!existsWithType) {
+    if (manyAllowed || !existsWithType) {
       this._refs.set([...refs, ref]);
     }
+  }
+
+  public unregister(ref: FieldRef): void {
+    const refs = this._refs();
+    this._refs.set(refs.filter(x => x.id !== ref.id));
   }
 }

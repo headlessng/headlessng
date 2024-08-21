@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Added
 
+- added 'error-message' package for creating custom error message component
 - added 'invalid' package to read and manage invalid state
 
 ### Changed

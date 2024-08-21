@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core';
+import { Directive, OnDestroy } from '@angular/core';
 import { LabelFieldRef } from '@headlessng/primitives/field';
 
 @Directive({
@@ -9,4 +9,8 @@ import { LabelFieldRef } from '@headlessng/primitives/field';
   selector: 'label[hLabel]',
   standalone: true
 })
-export class LabelDirective extends LabelFieldRef {}
+export class LabelDirective extends LabelFieldRef implements OnDestroy {
+  public ngOnDestroy(): void {
+    this.destroyRef();
+  }
+}

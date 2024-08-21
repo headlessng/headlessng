@@ -29,7 +29,7 @@ describe('@headlessng/primitives/label', () => {
     });
 
     // This test should be run first due to the generation of unique prefixes that are stored in memory.
-    it('should generate correct "id" attribute for each element when not passed in input', () => {
+    it('should generate correct "id" attribute for each element', () => {
       debugs.forEach((x, i) => {
         fixture.detectChanges();
         expect(x.nativeElement.getAttribute('id')).toBe(`h-label-${i}`);

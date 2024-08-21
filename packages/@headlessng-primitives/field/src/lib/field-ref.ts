@@ -2,7 +2,7 @@ import { effect, ElementRef, inject, Injector, signal, Signal } from '@angular/c
 
 import { FieldDirective } from './field.directive';
 
-export type FieldRefType = 'control' | 'description' | 'label';
+export type FieldRefType = 'control' | 'description' | 'error-message' | 'label';
 
 const typedRefId = (refType: FieldRefType) => {
   let index = 0;
@@ -11,6 +11,7 @@ const typedRefId = (refType: FieldRefType) => {
 
 const controlRefId = typedRefId('control');
 const descriptionRefId = typedRefId('description');
+const errorMessageRefId = typedRefId('error-message');
 const labelRefId = typedRefId('label');
 
 export abstract class FieldRef {
@@ -29,6 +30,10 @@ export abstract class FieldRef {
   public readonly elementRef: ElementRef<HTMLElement> = inject(ElementRef);
   public abstract readonly id: Signal<string>;
   public abstract readonly refType: FieldRefType;
+
+  protected destroyRef(): void {
+    this._fieldRef?.unregister(this);
+  }
 }
 
 export abstract class ControlFieldRef extends FieldRef {
@@ -45,6 +50,12 @@ export abstract class DescriptionFieldRef extends FieldRef {
   public readonly refType: FieldRefType = 'description';
 }
 
+export abstract class ErrorMessageFieldRef extends FieldRef {
+  private readonly _id = signal(errorMessageRefId());
+  public readonly id = this._id.asReadonly();
+  public readonly refType: FieldRefType = 'error-message';
+}
+
 export abstract class LabelFieldRef extends FieldRef {
   private readonly _id = signal(labelRefId());
   public readonly id = this._id.asReadonly();
@@ -54,4 +65,5 @@ export abstract class LabelFieldRef extends FieldRef {
 export const inType = (type: FieldRefType) => (ref: FieldRef) => ref.refType === type;
 export const inControlType = inType('control');
 export const inDescriptionType = inType('description');
+export const inErrorMessageType = inType('error-message');
 export const inLabelType = inType('label');
