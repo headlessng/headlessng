@@ -139,19 +139,20 @@ Structural directive to display icons depending on the state of a checkbox.
 
 ### Attributes
 
-| Attribute          | Type              | Description                                                                                                                                                                |
-| ------------------ | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `aria-checked`     | `CheckboxChecked` | Presented always with the current checkbox checked value.                                                                                                                  |
-| `aria-describedby` | `string`          | A reference identifier to the [`DescriptionDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md). |
-| `aria-disabled`    | `true`            | Presented when checkbox is disabled.                                                                                                                                       |
-| `aria-invalid`     | `true`            | Presented when checkbox state is invalid.                                                                                                                                  |
-| `aria-labelledby`  | `string`          | A reference identifier to the [`LabelDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).       |
-| `aria-required`    | `true`            | Presented when checkbox is required.                                                                                                                                       |
-| `disabled`         | `true`            | Presented when checkbox is disabled.                                                                                                                                       |
-| `id`               | `string`          | Always presented. Automatically generated checkbox element identifier.                                                                                                     |
-| `required`         | `true`            | Presented when checkbox is required.                                                                                                                                       |
-| `role`             | `checkbox`        | Presented always.                                                                                                                                                          |
-| `tabindex`         | `0 \| -1`         | Presented always. If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                                  |
+| Attribute           | Type              | Description                                                                                                                                                                                          |
+| ------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `aria-checked`      | `CheckboxChecked` | Presented always with the current checkbox checked value.                                                                                                                                            |
+| `aria-describedby`  | `string`          | A reference identifier to the [`DescriptionDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).                           |
+| `aria-disabled`     | `true`            | Presented when checkbox is disabled.                                                                                                                                                                 |
+| `aria-errormessage` | `true`            | A reference list of identifiers for the [`ErrorMessageDirective`](../error-message/README.md) host element. Presented when the checkbox state is invalid and the field contains some error messages. |
+| `aria-invalid`      | `true`            | Presented when checkbox state is invalid.                                                                                                                                                            |
+| `aria-labelledby`   | `string`          | A reference identifier to the [`LabelDirective`](../description/README.md) host element. Presented when the common parent is [`FieldDirective`](../field/README.md).                                 |
+| `aria-required`     | `true`            | Presented when checkbox is required.                                                                                                                                                                 |
+| `disabled`          | `true`            | Presented when checkbox is disabled.                                                                                                                                                                 |
+| `id`                | `string`          | Always presented. Automatically generated checkbox element identifier.                                                                                                                               |
+| `required`          | `true`            | Presented when checkbox is required.                                                                                                                                                                 |
+| `role`              | `checkbox`        | Presented always.                                                                                                                                                                                    |
+| `tabindex`          | `0 \| -1`         | Presented always. If the checkbox is enabled it sets the value to "0", otherwise to "-1".                                                                                                            |
 
 ### Keyboard interactions
 
