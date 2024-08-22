@@ -1,16 +1,9 @@
-import { Directive, OnDestroy } from '@angular/core';
-import { DescriptionFieldRef } from '@headlessng/primitives/field';
+import { Directive } from '@angular/core';
+import { DescriptionElement } from '@headlessng/primitives/field';
 
 @Directive({
   exportAs: 'hDescriptionRef',
-  host: {
-    '[attr.id]': 'id()'
-  },
   selector: '[hDescription]',
   standalone: true
 })
-export class DescriptionDirective extends DescriptionFieldRef implements OnDestroy {
-  public ngOnDestroy(): void {
-    this.destroyRef();
-  }
-}
+export class DescriptionDirective extends DescriptionElement {}

@@ -3,21 +3,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import {
-  ControlFieldRef,
-  DescriptionFieldRef,
-  ErrorMessageFieldRef,
-  LabelFieldRef
-} from './field-ref';
+  ControlElement,
+  DescriptionElement,
+  ErrorMessageElement,
+  LabelElement
+} from './field-element.directive';
 import { FieldDirective } from './field.directive';
 
-class ControlMock extends ControlFieldRef {
+class ControlElementMock extends ControlElement {
   public readonly handleLabelClick = () => undefined;
 }
 
-class DescriptionMock extends DescriptionFieldRef {}
-class ErrorMessageMock extends ErrorMessageFieldRef {}
+class DescriptionElementMock extends DescriptionElement {}
+class ErrorMessageElementMock extends ErrorMessageElement {}
 
-class LabelMock extends LabelFieldRef {
+class LabelElementMock extends LabelElement {
   public override elementRef: ElementRef<HTMLElement> = new ElementRef(
     document.createElement('label')
   );
@@ -36,10 +36,11 @@ describe('@headlessng/primitives/field', () => {
     let debug: DebugElement;
     let directive: FieldDirective;
 
-    let controlRef: ControlMock;
-    let descriptionRef: DescriptionMock;
-    let errorMessageRef: ErrorMessageMock;
-    let labelRef: LabelMock;
+    let controlRef: ControlElementMock;
+    let descriptionRef: DescriptionElementMock;
+    let firstErrorMessageRef: ErrorMessageElementMock;
+    let secondErrorMessageRef: ErrorMessageElementMock;
+    let labelRef: LabelElementMock;
 
     beforeEach(() => {
       fixture = TestBed.configureTestingModule({
@@ -50,10 +51,11 @@ describe('@headlessng/primitives/field', () => {
       directive = debug.injector.get(FieldDirective);
 
       runInInjectionContext(debug.injector, () => {
-        controlRef = new ControlMock();
-        descriptionRef = new DescriptionMock();
-        errorMessageRef = new ErrorMessageMock();
-        labelRef = new LabelMock();
+        controlRef = new ControlElementMock();
+        descriptionRef = new DescriptionElementMock();
+        firstErrorMessageRef = new ErrorMessageElementMock();
+        secondErrorMessageRef = new ErrorMessageElementMock();
+        labelRef = new LabelElementMock();
       });
     });
 
@@ -61,48 +63,88 @@ describe('@headlessng/primitives/field', () => {
       expect(debug.nativeElement).toBeDefined();
     });
 
-    it('should not register the same type twice', () => {
-      expect(directive['_refs']().length).toBe(0);
+    it('should not register a control element more than once', () => {
+      expect(directive['_elements']().length).toBe(0);
       directive.register(controlRef);
-      expect(directive['_refs']().length).toBe(1);
+      expect(directive['_elements']().length).toBe(1);
       directive.register(controlRef);
-      expect(directive['_refs']().length).toBe(1);
+      expect(directive['_elements']().length).toBe(1);
     });
 
-    it('should register the control reference and set its identifier correctly', () => {
+    it('should not register a description element more than once', () => {
+      expect(directive['_elements']().length).toBe(0);
+      directive.register(descriptionRef);
+      expect(directive['_elements']().length).toBe(1);
+      directive.register(descriptionRef);
+      expect(directive['_elements']().length).toBe(1);
+    });
+
+    it('should not register a label element more than once', () => {
+      expect(directive['_elements']().length).toBe(0);
+      directive.register(labelRef);
+      expect(directive['_elements']().length).toBe(1);
+      directive.register(labelRef);
+      expect(directive['_elements']().length).toBe(1);
+    });
+
+    it('should not register an element with the same id more than once', () => {
+      expect(directive['_elements']().length).toBe(0);
+      directive.register(firstErrorMessageRef);
+      expect(directive['_elements']().length).toBe(1);
+      directive.register(firstErrorMessageRef);
+      expect(directive['_elements']().length).toBe(1);
+    });
+
+    it('should allow register an error message element more than once', () => {
+      expect(directive['_elements']().length).toBe(0);
+      directive.register(firstErrorMessageRef);
+      expect(directive['_elements']().length).toBe(1);
+      directive.register(secondErrorMessageRef);
+      expect(directive['_elements']().length).toBe(2);
+    });
+
+    it('should register the control reference and set its identifier correctly, and then unregister it', () => {
       expect(directive.controlId()).toBe(undefined);
       directive.register(controlRef);
       fixture.detectChanges();
       expect(directive.controlId()).toBe(controlRef.id());
+      directive.unregister(controlRef);
+      fixture.detectChanges();
+      expect(directive.controlId()).toBe(undefined);
     });
 
-    it('should register the description reference and set its identifier correctly', () => {
+    it('should register the description reference and set its identifier correctly, and then unregister it', () => {
       expect(directive.descriptionId()).toBe(undefined);
       directive.register(descriptionRef);
       fixture.detectChanges();
       expect(directive.descriptionId()).toBe(descriptionRef.id());
+      directive.unregister(descriptionRef);
+      fixture.detectChanges();
+      expect(directive.descriptionId()).toBe(undefined);
     });
 
-    it('should register the error message reference and set its identifier correctly', () => {
+    it('should register a reference to error messages and set their identifiers correctly, and then unregister them', () => {
       expect(directive.errorMessageIds()).toBe(undefined);
-      directive.register(errorMessageRef);
+      directive.register(firstErrorMessageRef);
+      directive.register(secondErrorMessageRef);
       fixture.detectChanges();
-      expect(directive.errorMessageIds()).toBe(errorMessageRef.id());
+      expect(directive.errorMessageIds()?.includes(firstErrorMessageRef.id())).toBe(true);
+      expect(directive.errorMessageIds()?.includes(secondErrorMessageRef.id())).toBe(true);
+      directive.unregister(firstErrorMessageRef);
+      fixture.detectChanges();
+      expect(directive.errorMessageIds()?.includes(firstErrorMessageRef.id())).toBe(false);
+      directive.unregister(secondErrorMessageRef);
+      fixture.detectChanges();
+      expect(directive.errorMessageIds()).toBe(undefined);
     });
 
-    it('should register the label reference and set its identifier correctly', () => {
-      expect(directive.labelId()).toBe(undefined);
-      directive.register(labelRef);
-      fixture.detectChanges();
-      expect(directive.labelId()).toBe(labelRef.id());
-    });
-
-    it('should correctly unregister the reference and remove its identifier', () => {
+    it('should register the label reference and set its identifier correctly, and then unregister it', () => {
       expect(directive.labelId()).toBe(undefined);
       directive.register(labelRef);
       fixture.detectChanges();
       expect(directive.labelId()).toBe(labelRef.id());
       directive.unregister(labelRef);
+      fixture.detectChanges();
       expect(directive.labelId()).toBe(undefined);
     });
 

@@ -1,16 +1,15 @@
-.field {
+.checkbox-field {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
   gap: 8px;
 }
 
-.field__caption {
+.checkbox-field__control {
+  flex-shrink: 0;
+}
+
+.checkbox-field__body {
   display: flex;
   flex-direction: column;
   gap: 2px;
-}
-
-.field__messages {
-  flex-basis: 1;
 }

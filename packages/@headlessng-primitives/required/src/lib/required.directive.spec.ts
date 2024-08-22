@@ -7,7 +7,7 @@ import { RequiredDirective } from './required.directive';
 @Component({
   imports: [RequiredDirective],
   standalone: true,
-  template: `<div hRequired #hRequiredRef="hRequiredRef" [required]="required"></div>`
+  template: `<div hRequired #ref="hRequiredRef" [required]="required"></div>`
 })
 export class RequiredSpecComponent {
   public required = false;
@@ -39,7 +39,7 @@ describe('@headlessng/primitives/required', () => {
     });
 
     it('should forward a reference to the directive instance', () => {
-      expect(debug.references['hRequiredRef']).toBeInstanceOf(RequiredDirective);
+      expect(debug.references['ref']).toBeInstanceOf(RequiredDirective);
     });
 
     it('should set the correct attributes when the required state changes', () => {
@@ -59,18 +59,6 @@ describe('@headlessng/primitives/required', () => {
 
       changeTo(false);
       expectValue(null);
-    });
-
-    it('should emit an event when the required state changes', () => {
-      const event = jest.spyOn(directive.requiredChange, 'emit');
-      const checkFor = (value: boolean) => {
-        directive.setRequired(value);
-        fixture.detectChanges();
-        expect(event).toHaveBeenCalledWith(value);
-      };
-
-      checkFor(true);
-      checkFor(false);
     });
 
     it('should update the required state when the input value changes', () => {

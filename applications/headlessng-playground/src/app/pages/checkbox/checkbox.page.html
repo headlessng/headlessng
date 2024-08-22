@@ -1,6 +1,7 @@
 <form [formGroup]="form">
   <h-checkbox-field
     [control]="form.controls.privacyPolicyConsent"
-    [description]="'Accept consent to data processing in our system.'"
-    [label]="'Privacy policy'" />
+    [description]="'Agree to the data processing policy in our system.'"
+    [label]="'I accept the privacy policy'"
+    [required]="true" />
 </form>

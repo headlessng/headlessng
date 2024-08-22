@@ -6,21 +6,19 @@ import { CheckboxChecked } from '@headlessng/primitives/checkbox';
 import {
   CheckboxComponent,
   DescriptionComponent,
-  ErrorMessageComponent,
   FieldComponent,
   LabelComponent
 } from '../../atoms';
-import { ValidationMessagePipe } from '../../pipes';
+import { ErrorMessagesComponent } from '../error-messages';
 
 @Component({
   imports: [
     CommonModule,
     CheckboxComponent,
     DescriptionComponent,
-    ErrorMessageComponent,
+    ErrorMessagesComponent,
     FieldComponent,
-    LabelComponent,
-    ValidationMessagePipe
+    LabelComponent
   ],
   selector: 'h-checkbox-field',
   templateUrl: 'checkbox-field.component.html',
@@ -31,4 +29,5 @@ export class CheckboxFieldComponent {
   public readonly control = input.required<FormControl<CheckboxChecked>>();
   public readonly description = input<string | undefined>();
   public readonly label = input.required<string>();
+  public readonly required = input<boolean>(false);
 }
