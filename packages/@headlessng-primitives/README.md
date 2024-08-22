@@ -27,8 +27,10 @@ Each component in this library is independent and has its own documentation, bel
 - [@headlessng/primitives/checkbox](checkbox/README.md)
 - [@headlessng/primitives/description](description/README.md)
 - [@headlessng/primitives/disabled](disabled/README.md)
+- [@headlessng/primitives/error-message](error-message/README.md)
 - [@headlessng/primitives/field](field/README.md)
 - [@headlessng/primitives/focus](focus/README.md)
+- [@headlessng/primitives/invalid](invalid/README.md)
 - [@headlessng/primitives/label](label/README.md)
 - [@headlessng/primitives/required](required/README.md)
 

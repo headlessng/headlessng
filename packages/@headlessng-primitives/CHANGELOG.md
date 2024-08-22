@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 --
 
+## [0.2.1] - 2024-08-22
+
+### Fixed
+
+- fixed the lack of links to "error-message" and "invalid" sub entry points in README.md
+
 ## [0.2.0] - 2024-08-22
 
 ### Added
@@ -49,7 +55,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - The package has been configured and is ready for development.
 
-[Unreleased]: https://github.com/headlessng/headlessng/compare/@headlessng/primitives-v0.2.0...HEAD
+[Unreleased]: https://github.com/headlessng/headlessng/compare/@headlessng/primitives-v0.2.1...HEAD
+[0.2.1]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.2.1
 [0.2.0]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.2.0
 [0.1.0]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.1.0
 [0.0.0]: https://github.com/headlessng/headlessng/releases/tag/%40headlessng%2Fprimitives-v0.0.0
