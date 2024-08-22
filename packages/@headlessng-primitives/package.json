@@ -1,6 +1,6 @@
 {
   "name": "@headlessng/primitives",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A set of unstyled and fully accessible components for building design systems based on Angular.",
   "keywords": [
     "angular",
