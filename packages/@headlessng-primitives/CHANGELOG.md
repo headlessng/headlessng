@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
-- fixed missing 'aria-errros' attribute information in CheckboxDirective documentation
+- fixed missing 'aria-errormessage' attribute information in CheckboxDirective documentation
 
 ## [0.2.1] - 2024-08-22
 
