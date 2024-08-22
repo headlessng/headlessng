@@ -8,15 +8,23 @@ Manages all related attributes and events for fields in forms, such as binding a
 <!-- source -->
 <div hField>
   <div hCheckbox></div>
-  <label hLabel>Push notifications</label>
-  <span hDescription>Receive app notifications directly to your smartphone.</span>
+  <label hLabel>I accept the privacy policy</label>
+  <span hDescription>Agree to the data processing policy in our system.</span>
+  <span hErrorMessage>Acceptance of this field is required.</span>
 </div>
 
 <!-- rendered -->
 <div>
-  <div role="checkbox" [...] aria-describedby="h-description-0" aria-labelledby="h-label-0"></div>
-  <label id="h-label-0">Push notifications</label>
-  <span id="h-description-0">Receive app notifications directly to your smartphone.</span>
+  <div
+    role="checkbox"
+    [...]
+    aria-describedby="h-description-0"
+    aria-labelledby="h-label-0"
+    aria-invalid="true"
+    aria-errormessage="h-error-message-0"></div>
+  <label id="h-label-0">I accept the privacy policy</label>
+  <span id="h-description-0">Agree to the data processing policy in our system.</span>
+  <span id="h-error-message-0">Acceptance of this field is required.</span>
 </div>
 ```
 
@@ -36,8 +44,9 @@ Label ID: {{ ref.labelId() }}
 
 #### Properties
 
-| Property        | Type             | Description                                                              |
-| --------------- | ---------------- | ------------------------------------------------------------------------ |
-| `controlId`     | `Signal<string>` | Stores information about the control element's id, e.g. input, checkbox. |
-| `descriptionId` | `Signal<string>` | Stores information about the description element's id.                   |
-| `labelId`       | `Signal<string>` | Stores information about the label element's id.                         |
+| Property          | Type             | Description                                                              |
+| ----------------- | ---------------- | ------------------------------------------------------------------------ |
+| `controlId`       | `Signal<string>` | Stores information about the control element's id, e.g. input, checkbox. |
+| `descriptionId`   | `Signal<string>` | Stores information about the description element's id.                   |
+| `errorMessageIds` | `Signal<string>` | Stores information about the element identifiers of error messages.      |
+| `labelId`         | `Signal<string>` | Stores information about the label element's id.                         |

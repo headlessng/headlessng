@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ### Fixed
 
+- fixed missing error message element information in FieldDirective documentation
 - fixed the lack of links to "error-message" and "invalid" sub entry points in README.md
 
 ## [0.2.0] - 2024-08-22
