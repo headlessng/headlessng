@@ -7,7 +7,7 @@ import { DisabledDirective } from './disabled.directive';
 @Component({
   imports: [DisabledDirective],
   standalone: true,
-  template: `<div hDisabled #hDisabledRef="hDisabledRef" [disabled]="disabled"></div>`
+  template: `<div hDisabled #ref="hDisabledRef" [disabled]="disabled"></div>`
 })
 export class DisabledSpecComponent {
   public disabled = false;
@@ -39,7 +39,7 @@ describe('@headlessng/primitives/disabled', () => {
     });
 
     it('should forward a reference to the directive instance', () => {
-      expect(debug.references['hDisabledRef']).toBeInstanceOf(DisabledDirective);
+      expect(debug.references['ref']).toBeInstanceOf(DisabledDirective);
     });
 
     it('should set the correct attributes when the disabled state changes', () => {
@@ -59,18 +59,6 @@ describe('@headlessng/primitives/disabled', () => {
 
       changeTo(false);
       expectValue(null);
-    });
-
-    it('should emit an event when the disabled state changes', () => {
-      const event = jest.spyOn(directive.disabledChange, 'emit');
-      const checkFor = (value: boolean) => {
-        directive.setDisabled(value);
-        fixture.detectChanges();
-        expect(event).toHaveBeenCalledWith(value);
-      };
-
-      checkFor(true);
-      checkFor(false);
     });
 
     it('should update the disabled state when the input value changes', () => {

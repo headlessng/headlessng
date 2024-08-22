@@ -6,12 +6,13 @@ import {
   forwardRef,
   HostListener,
   inject,
+  Injector,
   output,
   signal
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { DisabledDirective } from '@headlessng/primitives/disabled';
-import { ControlFieldRef } from '@headlessng/primitives/field';
+import { ControlElement } from '@headlessng/primitives/field';
 import { FocusDirective } from '@headlessng/primitives/focus';
 import { InvalidDirective } from '@headlessng/primitives/invalid';
 import { RequiredDirective } from '@headlessng/primitives/required';
@@ -23,9 +24,9 @@ import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
   host: {
     '[attr.aria-checked]': '_checked()',
     '[attr.aria-describedby]': '_fieldRef?.descriptionId()',
+    '[attr.aria-errormessage]': '_fieldRef?.errorMessageIds()',
     '[attr.aria-labelledby]': '_fieldRef?.labelId()',
     '[attr.data-state]': 'state()',
-    '[attr.id]': 'id()',
     '[attr.role]': '"checkbox"',
     '[attr.tabindex]': 'disabledRef.disabled() ? "-1" : "0"'
   },
@@ -59,7 +60,9 @@ import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
   selector: '[hCheckbox]',
   standalone: true
 })
-export class CheckboxDirective extends ControlFieldRef implements ControlValueAccessor {
+export class CheckboxDirective extends ControlElement implements ControlValueAccessor {
+  private readonly _injector = inject(Injector);
+
   public readonly disabledRef = inject(DisabledDirective);
   public readonly focusRef = inject(FocusDirective);
   public readonly requiredRef = inject(RequiredDirective);

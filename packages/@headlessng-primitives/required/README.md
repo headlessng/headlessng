@@ -51,15 +51,15 @@ Required state: {{ ref.required() }}
 
 #### Outputs
 
-| Output           | Type                        | Description                              |
-| ---------------- | --------------------------- | ---------------------------------------- |
-| `requiredChange` | `OutputEmitterRef<boolean>` | Emitted when the required state changes. |
+| Output           | Type                   | Description                              |
+| ---------------- | ---------------------- | ---------------------------------------- |
+| `requiredChange` | `ModelSignal<boolean>` | Emitted when the required state changes. |
 
 #### Properties
 
-| Property   | Type              | Description                                  |
-| ---------- | ----------------- | -------------------------------------------- |
-| `required` | `Signal<boolean>` | Stores information about the required state. |
+| Property   | Type                   | Description                                  |
+| ---------- | ---------------------- | -------------------------------------------- |
+| `required` | `ModelSignal<boolean>` | Stores information about the required state. |
 
 ## Accessibility
 

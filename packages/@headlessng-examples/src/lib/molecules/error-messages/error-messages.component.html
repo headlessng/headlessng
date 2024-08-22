@@ -1,0 +1,5 @@
+<div *ngIf="control().errors && control().touched" class="error-messages">
+  <h-error-message *ngFor="let error of control().errors | keyvalue">
+    {{ error.key | validationMessage }}
+  </h-error-message>
+</div>

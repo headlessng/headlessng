@@ -1,2 +1,2 @@
-export * from './field-ref';
+export * from './field-element.directive';
 export * from './field.directive';

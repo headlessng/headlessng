@@ -11,15 +11,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { fromEvent } from 'rxjs';
 
 import {
-  ControlFieldRef,
-  DescriptionFieldRef,
-  FieldRef,
-  inControlType,
-  inDescriptionType,
-  inLabelType,
-  inType,
-  LabelFieldRef
-} from './field-ref';
+  ControlElement,
+  DescriptionElement,
+  ErrorMessageElement,
+  FieldElement,
+  FieldElementType,
+  isControl,
+  isDescription,
+  isErrorMessage,
+  isLabel,
+  isType,
+  LabelElement
+} from './field-element.directive';
 
 @Directive({
   exportAs: 'hFieldRef',
@@ -28,36 +31,46 @@ import {
 })
 export class FieldDirective {
   private readonly _injector = inject(Injector);
-  private readonly _refs = signal<FieldRef[]>([]);
+  private readonly _elements = signal<FieldElement[]>([]);
 
-  private readonly _controlRef = computed<ControlFieldRef | undefined>(
-    () => this._refs().find(inControlType) as ControlFieldRef
+  private readonly _control = computed<ControlElement | undefined>(
+    () => this._elements().find(isControl) as ControlElement
   );
 
-  private readonly _descriptionRef = computed<DescriptionFieldRef | undefined>(
-    () => this._refs().find(inDescriptionType) as DescriptionFieldRef
+  private readonly _description = computed<DescriptionElement | undefined>(
+    () => this._elements().find(isDescription) as DescriptionElement
   );
 
-  private readonly _labelRef = computed<LabelFieldRef | undefined>(
-    () => this._refs().find(inLabelType) as LabelFieldRef
+  private readonly _errorMessages = computed<ErrorMessageElement[]>(
+    () => this._elements().filter(isErrorMessage) as ErrorMessageElement[]
   );
 
-  public readonly descriptionId = computed(() => this._descriptionRef()?.id());
-  public readonly controlId = computed(() => this._controlRef()?.id());
-  public readonly labelId = computed(() => this._labelRef()?.id());
+  private readonly _label = computed<LabelElement | undefined>(
+    () => this._elements().find(isLabel) as LabelElement
+  );
+
+  public readonly controlId = computed(() => this._control()?.id());
+  public readonly descriptionId = computed(() => this._description()?.id());
+  public readonly errorMessageIds = computed(
+    () =>
+      this._errorMessages()
+        .map(x => x.id())
+        .join(' ') || undefined
+  );
+  public readonly labelId = computed(() => this._label()?.id());
 
   private readonly _connectControlWithLabelEffect = effect(
     () => {
-      const controlRef = this._controlRef();
-      const labelRef = this._labelRef();
-      if (!controlRef || !labelRef) {
+      const control = this._control();
+      const label = this._label();
+      if (!control || !label) {
         return;
       }
 
       runInInjectionContext(this._injector, () => {
-        fromEvent(labelRef.elementRef.nativeElement, 'click')
+        fromEvent(label.elementRef.nativeElement, 'click')
           .pipe(takeUntilDestroyed())
-          .subscribe(() => controlRef.handleLabelClick());
+          .subscribe(() => control.handleLabelClick());
       });
     },
     {
@@ -65,17 +78,25 @@ export class FieldDirective {
     }
   );
 
-  /**
-   * Registers a reference to a child element of a field.
-   *
-   * For internal use only.
-   * @private
-   */
-  public register(ref: FieldRef): void {
-    const refs = this._refs();
-    const existsWithType = refs.some(inType(ref.refType));
-    if (!existsWithType) {
-      this._refs.set([...refs, ref]);
+  public register(element: FieldElement): void {
+    const elements = this._elements();
+    const alreadyExistsWithId = elements.some(x => x.id() === element.id());
+    if (alreadyExistsWithId) {
+      return;
     }
+
+    const manyAllowedInTypes: FieldElementType[] = ['error-message'];
+    const manyAllowed = manyAllowedInTypes.includes(element.elementType);
+    const alreadyExistsInType = elements.some(isType(element.elementType));
+    if (!manyAllowed && alreadyExistsInType) {
+      return;
+    }
+
+    this._elements.set([...elements, element]);
+  }
+
+  public unregister(element: FieldElement): void {
+    const elements = this._elements();
+    this._elements.set(elements.filter(x => x.id !== element.id));
   }
 }

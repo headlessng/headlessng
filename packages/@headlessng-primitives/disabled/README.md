@@ -51,15 +51,15 @@ Disabled state: {{ ref.disabled() }}
 
 #### Outputs
 
-| Output           | Type                        | Description                              |
-| ---------------- | --------------------------- | ---------------------------------------- |
-| `disabledChange` | `OutputEmitterRef<boolean>` | Emitted when the disabled state changes. |
+| Output           | Type                   | Description                              |
+| ---------------- | ---------------------- | ---------------------------------------- |
+| `disabledChange` | `ModelSignal<boolean>` | Emitted when the disabled state changes. |
 
 #### Properties
 
-| Property   | Type              | Description                                  |
-| ---------- | ----------------- | -------------------------------------------- |
-| `disabled` | `Signal<boolean>` | Stores information about the disabled state. |
+| Property   | Type                   | Description                                  |
+| ---------- | ---------------------- | -------------------------------------------- |
+| `disabled` | `ModelSignal<boolean>` | Stores information about the disabled state. |
 
 ## Accessibility
 

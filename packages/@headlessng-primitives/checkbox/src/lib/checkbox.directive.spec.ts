@@ -13,9 +13,14 @@ import { stateFromChecked, CheckboxChecked } from './checkbox.interface';
 
 class FieldMockDirective {
   public readonly descriptionId = signal('description-id');
+  public readonly errorMessageIds = signal('error-message-id');
   public readonly labelId = signal('label-id');
 
   public register(): void {
+    return;
+  }
+
+  public unregister(): void {
     return;
   }
 }
@@ -79,6 +84,10 @@ describe('@headlessng/primitives/checkbox', () => {
 
     it('should have the correct aria-describedby attribute set', () => {
       expect(host.getAttribute('aria-describedby')).toBe('description-id');
+    });
+
+    it('should have the correct aria-errormessage attribute set', () => {
+      expect(host.getAttribute('aria-errormessage')).toBe('error-message-id');
     });
 
     it('should have the correct aria-labelledby attribute set', () => {

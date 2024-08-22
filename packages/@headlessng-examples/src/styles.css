@@ -46,6 +46,7 @@
   --font-medium: 500;
   --font-normal: 400;
 
+  --text-danger: var(--danger-500);
   --text-normal: var(--neutral-900);
   --text-muted: var(--neutral-700);
 
